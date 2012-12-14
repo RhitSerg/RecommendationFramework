@@ -10,6 +10,13 @@
             name="Recommendation View"
             restorable="true">
       </view>
+      <view
+            category="org.eclipse.jdt.ui.java"
+            class="cfgrecognition.views.CFGView"
+            id="cfgrecognition.views.CFGView"
+            name="CFG View"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

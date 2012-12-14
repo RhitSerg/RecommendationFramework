@@ -21,7 +21,6 @@ import astrecognition.visitors.TreeVisitor;
 
 /**
  * Builds abstract syntax trees from the given Java workspace
- * @author zimmerka
  *
  */
 public class ASTBuilder {
