@@ -1,6 +1,8 @@
 package fromastview;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jdt.core.Signature;
@@ -49,9 +51,29 @@ public class NodeLabel {
 			buf.append(']');
 		}
 	}
+	
+	private static boolean isVariableDeclaration(String name) {
+		return name.contains("VariableDeclaration");
+	}
+	
+	private static boolean isLoop(String name) {
+		Collection<String> loopNames = Arrays.asList(new String[] {"ForStatement", "WhileStatement", "DoStatement"});
+		return loopNames.contains(name);
+	}
+	
+	private static String simplifyName(String name) {
+		if (isVariableDeclaration(name)) {
+			return "VariableDeclaration";
+		}
+		if (isLoop(name)) {
+			return "Loop";
+		}
+		return name;
+	}
 
 	private static void getNodeType(ASTNode node, StringBuffer buf) {
-		buf.append(Signature.getSimpleName(node.getClass().getName()));
+		String name = simplifyName(Signature.getSimpleName(node.getClass().getName()));
+		buf.append(name);
 		appendPosition(node, buf);
 		if ((node.getFlags() & ASTNode.MALFORMED) != 0) {
 			buf.append(" (malformed)");
@@ -126,8 +148,8 @@ public class NodeLabel {
 				res.add(createBinding(expression, binding));
 			}
 			// Expression attributes:
-			res.add(new GeneralAttribute(expression, "Boxing: " + expression.resolveBoxing() + "; Unboxing: " + expression.resolveUnboxing()));
-			res.add(new GeneralAttribute(expression, "ConstantExpressionValue", expression.resolveConstantExpressionValue()));
+			//res.add(new GeneralAttribute(expression, "Boxing: " + expression.resolveBoxing() + "; Unboxing: " + expression.resolveUnboxing()));
+			//res.add(new GeneralAttribute(expression, "ConstantExpressionValue", expression.resolveConstantExpressionValue()));
 
 		// references:
 		} else if (node instanceof ConstructorInvocation) {

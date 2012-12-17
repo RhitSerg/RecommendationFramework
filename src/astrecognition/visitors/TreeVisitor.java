@@ -20,15 +20,11 @@ public class TreeVisitor extends GeneralVisitor {
 	private Map<String, Integer> labelIds;
 	private CompilationUnit compilationUnit;
 	
-	public TreeVisitor() {
+	public TreeVisitor(CompilationUnit compilationUnit) {
 		super();
 		this.root = new Tree(ROOT_LABEL);
 		this.nodes = new HashMap<ASTNode, Tree>();
 		this.labelIds = new HashMap<String, Integer>();
-	}
-	
-	public TreeVisitor(CompilationUnit compilationUnit) {
-		this();
 		this.compilationUnit = compilationUnit;
 	}
 	
@@ -41,6 +37,13 @@ public class TreeVisitor extends GeneralVisitor {
 		this.addToTree(node, current);
 		addAttributeChildren(node, current);
 	}
+	
+	protected void skipVisit(ASTNode node) {
+		Tree current = new Tree(NodeLabel.getLabel(node));
+		Tree parentNode = getParentTree(node);
+		this.makeLabelUnique(current);
+		this.nodes.put(node, parentNode);
+	}
 
 	private void addToTree(ASTNode astNode, Tree treeNode) {
 		Tree parentNode = getParentTree(astNode);
@@ -50,11 +53,11 @@ public class TreeVisitor extends GeneralVisitor {
 		this.nodes.put(astNode, treeNode);
 	}
 
-	private void makeLabelUnique(Tree treeNode) {
+	protected void makeLabelUnique(Tree treeNode) {
 		if (this.labelIds.containsKey(treeNode.getLabel())) {
 			int currentValue = this.labelIds.get(treeNode.getLabel());
-			treeNode.setLabel(treeNode.getLabel() + currentValue);
 			this.labelIds.put(treeNode.getLabel(), currentValue + 1);
+			treeNode.setLabel(treeNode.getLabel() + " (" + currentValue + ")");
 		} else {
 			this.labelIds.put(treeNode.getLabel(), 0);
 		}

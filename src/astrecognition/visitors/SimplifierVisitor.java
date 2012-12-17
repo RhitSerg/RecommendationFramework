@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 
 import astrecognition.model.Tree;
 /**
@@ -46,6 +47,13 @@ public class SimplifierVisitor extends TreeVisitor {
 		int nodeTreePosition = nodeTree.getParent().getChildren().indexOf(nodeTree);
 		nodeTree.getParent().getChildren().add(nodeTreePosition, varDeclarationTree);
 		nodeTree.deleteChild(varDeclarationPosition);
+		super.endVisit(node);
+	}
+	
+	@Override
+	public void endVisit(VariableDeclarationExpression node) {
+		this.nodes.get(node).deleteChild(0);
+		this.nodes.get(node).deleteChild(0);
 		super.endVisit(node);
 	}
 

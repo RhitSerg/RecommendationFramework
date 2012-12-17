@@ -17,6 +17,13 @@
             name="CFG View"
             restorable="true">
       </view>
+      <view
+            category="org.eclipse.jdt.ui.java"
+            class="astrecognition.views.ASTView"
+            id="astrecognition.views.ASTView"
+            name="AST View"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

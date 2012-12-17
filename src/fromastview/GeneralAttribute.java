@@ -20,7 +20,6 @@ public class GeneralAttribute extends ASTAttribute {
 	public GeneralAttribute(Object parent, String name, Object value) {
 		fParent= parent;
 		fLabel = "";
-		//fLabel= name + ": " + String.valueOf(value);
 		fChildren= EMPTY;
 	}
 	

@@ -92,6 +92,7 @@ import org.eclipse.jdt.core.dom.WildcardType;
 public abstract class GeneralVisitor extends ASTVisitor {
 	
 	protected abstract void generalVisit(ASTNode node);
+	protected abstract void skipVisit(ASTNode node);
 	
 	@Override
 	public boolean visit(AnnotationTypeDeclaration node) {
@@ -245,7 +246,7 @@ public abstract class GeneralVisitor extends ASTVisitor {
 
 	@Override
 	public boolean visit(ExpressionStatement node) {
-		this.generalVisit(node);
+		this.skipVisit(node); // SKIPPING EXPRESSION STATEMENTS BECAUSE THEY HAVE NO USE
 		return super.visit(node);
 	}
 
