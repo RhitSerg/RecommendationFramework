@@ -3,7 +3,6 @@ package astrecognition.actions;
 import org.eclipse.jface.action.Action;
 
 import pqgram.PQGram;
-
 import astrecognition.ASTBuilder;
 import astrecognition.model.Tree;
 

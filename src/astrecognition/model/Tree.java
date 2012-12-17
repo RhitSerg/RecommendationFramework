@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tree {
+	protected Tree parent;
+	protected List<Tree> children;
 	private String label;
-	private Tree parent;
-	private List<Tree> children;
 	private int lineNumber;
 
 	public Tree(Tree parent, String label) {
-		this.parent = parent;
 		this.label = label;
+		this.parent = parent;
 		this.children = new ArrayList<Tree>();
 		this.lineNumber = 0;
 	}
@@ -19,9 +19,13 @@ public class Tree {
 	public Tree(String label) {
 		this(null, label);
 	}
+
+	public String getLabel() {
+		return this.label;
+	}
 	
-	public Tree() {
-		this(null);
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	public Tree getParent() {
@@ -39,22 +43,6 @@ public class Tree {
 	
 	public void deleteChild(int position) {
 		this.children.remove(position);
-	}
-
-	public String getLabel() {
-		return this.label;
-	}
-	
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
-	public void setLineNumber(int lineNumber) {
-		this.lineNumber = lineNumber;
-	}
-	
-	public int getLineNumber() {
-		return this.lineNumber;
 	}
 
 	public List<Tree> getChildren() {
@@ -91,6 +79,14 @@ public class Tree {
 			}
 		}
 		return null;
+	}
+	
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+	
+	public int getLineNumber() {
+		return this.lineNumber;
 	}
 
 	public String toString() {

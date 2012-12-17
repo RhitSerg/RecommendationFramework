@@ -52,6 +52,7 @@ public class SimplifierVisitor extends TreeVisitor {
 	
 	@Override
 	public void endVisit(VariableDeclarationExpression node) {
+		// Trying to get rid of extraneous information
 		this.nodes.get(node).deleteChild(0);
 		this.nodes.get(node).deleteChild(0);
 		super.endVisit(node);
