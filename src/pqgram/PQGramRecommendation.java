@@ -2,6 +2,7 @@ package pqgram;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,9 @@ public class PQGramRecommendation {
 	public static List<Edit> getEdits(Profile profile1, Profile profile2, Tree sourceTree, Tree targetTree) {
 		Profile common = profile1.intersect(profile2);
 		Profile missing = profile2.difference(common);
+		System.out.println(missing);
 		Profile extra = profile1.difference(common);
+		System.out.println(extra);
 
 		Map<String, Tree> built = new HashMap<String, Tree>();
 		Map<String, String> childToParent = new HashMap<String, String>();
@@ -30,7 +33,9 @@ public class PQGramRecommendation {
 		buildCommonTrees(common, built, childToParent);
 		
 		List<Deletion> deletions = getDeletions(extra, built, childToParent);
+		Utilities.printList(deletions);
 		List<Insertion> insertions = getInsertions(missing, built, childToParent);
+		Utilities.printList(insertions);
 		
 		// minimizing deletions/insertions by finding eligible relabelings and matching up pairs due to relabeling propagations
 		Map<String, String> relabelings = RecommendationMinimizer.getRelabelings(insertions, deletions, sourceTree, targetTree);
@@ -40,16 +45,27 @@ public class PQGramRecommendation {
 		List<Edit> edits = new ArrayList<Edit>();
 		
 		for (String oldName : relabelings.keySet()) {
-			if (!oldName.equals(relabelings.get(oldName))) {
+			if (!oldName.equals(relabelings.get(oldName)) && !sourceTree.find(oldName).getOriginalLabel().equals(targetTree.find(relabelings.get(oldName)).getOriginalLabel())) {
 				edits.add(new Relabeling(oldName, relabelings.get(oldName)));
 			}
 		}
+		
 		edits.addAll(deletions);
 		edits.addAll(insertions);
 		
 		for (Edit edit : edits) {
-			edit.setLineNumber(sourceTree.find(edit.getA()).getLineNumber());
+			Tree correspondingTree = sourceTree.find(edit.getA());
+			if (correspondingTree != null) {
+				edit.setLineNumber(sourceTree.find(edit.getA()).getLineNumber());
+			}
 		}
+		
+		// Condensing edits that correspond to the same place in the code
+		Collections.sort(edits, new Comparator<Edit>() {
+			public int compare(Edit edit1, Edit edit2) {
+				return edit1.getLineNumber() - edit2.getLineNumber();
+			}
+		});
 
 		return edits;
 	}
@@ -87,14 +103,14 @@ public class PQGramRecommendation {
 			Tree parent = getTree(tup.get(1), built);
 			int position = addChildToParent(ancestor, parent, childToParent);
 			if (position >= 0) {
-				edits.add(new PositionalEdit(ancestor.getLabel(), parent.getLabel(), position));
+				edits.add(new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position));
 			}
 			for (int i = 2; i < tup.length(); i++) {				
 				String currentLabel = tup.get(i);
 				Tree currentTree = getTree(currentLabel, built);
 				position = addChildToParent(parent, currentTree, childToParent);
 				if (position >= 0 && !currentLabel.equals(PQGram.STAR_LABEL)) {
-					edits.add(new PositionalEdit(parent.getLabel(), currentLabel, position));
+					edits.add(new PositionalEdit(parent.getUniqueLabel(), currentLabel, position));
 				}
 			}
 		}
@@ -118,8 +134,8 @@ public class PQGramRecommendation {
 	
 	// hook up a child to its parent if not already done and return position; return -1 if already done
 	private static int addChildToParent(Tree parent, Tree child, Map<String, String> childToParent) {
-		if (!childToParent.containsKey(child.getLabel())) {
-			childToParent.put(child.getLabel(), parent.getLabel());
+		if (!childToParent.containsKey(child.getUniqueLabel())) {
+			childToParent.put(child.getUniqueLabel(), parent.getUniqueLabel());
 			return parent.addChild(child);
 		}
 		return -1;
@@ -142,7 +158,7 @@ public class PQGramRecommendation {
 		}
 		if (commonTrees.size() == 1) {
 			Tree falseRoot = commonTrees.toArray(new Tree[1])[0];
-			if (falseRoot.getLabel().equals(PQGram.STAR_LABEL)) {
+			if (falseRoot.getUniqueLabel().equals(PQGram.STAR_LABEL)) {
 				commonTrees.remove(falseRoot);
 				commonTrees.add(falseRoot.getChildren().get(0));
 			}

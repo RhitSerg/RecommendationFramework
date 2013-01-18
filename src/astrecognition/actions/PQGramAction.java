@@ -1,5 +1,8 @@
 package astrecognition.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.action.Action;
 
 import pqgram.PQGram;
@@ -24,18 +27,28 @@ public abstract class PQGramAction extends Action {
 	
 	protected Tree getSourceMethodBody(Tree workspaceTree) {
 		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
-		return typeDec.getChildren().get(6).getChildren().get(7);
+		return typeDec.getChildren().get(6).getChildren().get(6);
 	}
 	
-	protected Tree getTargetMethodBody(Tree workspaceTree) {
+	protected Tree getFirstTargetMethodBody(Tree workspaceTree) {
 		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
-		return typeDec.getChildren().get(7).getChildren().get(7);
+		return typeDec.getChildren().get(7).getChildren().get(6);
+	}
+	
+	protected List<Tree> getTargetMethods(Tree workspaceTree) {
+		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
+		int numMethods = typeDec.getChildren().size() - 7;
+		List<Tree> methodTrees = new ArrayList<Tree>();
+		for (int i = 0; i < numMethods; i++) {
+			methodTrees.add(typeDec.getChildren().get(i + 7));
+		}
+		return methodTrees;
 	}
 	
 	protected double getSourceTargetDistance() {
 		Tree workspaceTree = this.getWorkspaceTree();
 		Tree sourceMethodTree = this.getSourceMethodBody(workspaceTree);
-		Tree targetMethodTree = this.getTargetMethodBody(workspaceTree);
+		Tree targetMethodTree = this.getFirstTargetMethodBody(workspaceTree);
 		return PQGram.getDistance(sourceMethodTree, targetMethodTree, P, Q);
 	}
 	

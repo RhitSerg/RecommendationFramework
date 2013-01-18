@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.ui.IActionBars;
 
+import astrecognition.actions.PQGramBestRecommendationAction;
 import astrecognition.actions.PQGramDistanceAction;
 import astrecognition.actions.PQGramRecommendationAction;
 
@@ -14,6 +15,7 @@ public class RecommendationView extends AbstractView {
 	
 	private Action pqGramDistanceAction;
 	private Action pqGramRecommendationAction;
+	private Action pqGramBestRecommendationAction;
 	private List recommendedEdits;
 
 	@Override
@@ -37,11 +39,14 @@ public class RecommendationView extends AbstractView {
 		manager.add(this.pqGramDistanceAction);
 		manager.add(new Separator());
 		manager.add(this.pqGramRecommendationAction);
+		manager.add(new Separator());
+		manager.add(this.pqGramBestRecommendationAction);
 	}
 
 	private void makeActions() {
 		this.pqGramDistanceAction = new PQGramDistanceAction(this);
 		this.pqGramRecommendationAction = new PQGramRecommendationAction(this.recommendedEdits);
+		this.pqGramBestRecommendationAction = new PQGramBestRecommendationAction(this.recommendedEdits, this);
 	}
 
 }

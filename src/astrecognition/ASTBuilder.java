@@ -41,7 +41,6 @@ public class ASTBuilder {
 				// Currently not doing anything if this exception occurs. Oh noooooo...
 			}
 		}
-		
 		return tree;
 	}
 	

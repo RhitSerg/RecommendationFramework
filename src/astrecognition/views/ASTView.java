@@ -1,5 +1,7 @@
 package astrecognition.views;
 
+import java.util.HashMap;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -54,8 +56,10 @@ public class ASTView extends AbstractView {
 		private Tree root;
 		public Object[] getElements(Object parent) {
 			if (parent.equals(getViewSite())) {
-				if (this.root == null)
-					root = ASTBuilder.getWorkspaceASTs();
+				if (this.root == null) {
+					root = ASTBuilder.getWorkspaceASTs().makeLabelsUnique(new HashMap<String, Integer>());
+					System.out.println(root);
+				}
 				return getChildren(root);
 			}
 			return getChildren(parent);

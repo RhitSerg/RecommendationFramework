@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import astrecognition.model.Tree;
@@ -17,14 +18,12 @@ public class TreeVisitor extends GeneralVisitor {
 	
 	private Tree root;
 	protected Map<ASTNode, Tree> nodes;
-	private Map<String, Integer> labelIds;
 	private CompilationUnit compilationUnit;
 	
 	public TreeVisitor(CompilationUnit compilationUnit) {
 		super();
 		this.root = new Tree(ROOT_LABEL);
 		this.nodes = new HashMap<ASTNode, Tree>();
-		this.labelIds = new HashMap<String, Integer>();
 		this.compilationUnit = compilationUnit;
 	}
 	
@@ -34,14 +33,25 @@ public class TreeVisitor extends GeneralVisitor {
 
 	protected void generalVisit(ASTNode node) {
 		Tree current = new Tree(NodeLabel.getLabel(node));
+		current.setStartPosition(node.getStartPosition());
+		current.setEndPosition(node.getStartPosition() + node.getLength() - 1);
 		this.addToTree(node, current);
 		addAttributeChildren(node, current);
 	}
 	
+	protected void generalEndVisit(ASTNode node) {
+		// LABEL UNIQUENESS DONE IN PQ-GRAM, nothing left here right now
+	}
+	
+	@Override
+	public boolean visit(ExpressionStatement node) {
+		this.skipVisit(node); // SKIPPING EXPRESSION STATEMENTS BECAUSE THEY HAVE NO USE
+		return true;
+//		return super.visit(node);
+	}
+	
 	protected void skipVisit(ASTNode node) {
-		Tree current = new Tree(NodeLabel.getLabel(node));
 		Tree parentNode = getParentTree(node);
-		this.makeLabelUnique(current);
 		this.nodes.put(node, parentNode);
 	}
 
@@ -49,18 +59,7 @@ public class TreeVisitor extends GeneralVisitor {
 		Tree parentNode = getParentTree(astNode);
 		parentNode.addChild(treeNode);
 		treeNode.setParent(parentNode);
-		this.makeLabelUnique(treeNode);
 		this.nodes.put(astNode, treeNode);
-	}
-
-	protected void makeLabelUnique(Tree treeNode) {
-		if (this.labelIds.containsKey(treeNode.getLabel())) {
-			int currentValue = this.labelIds.get(treeNode.getLabel());
-			this.labelIds.put(treeNode.getLabel(), currentValue + 1);
-			treeNode.setLabel(treeNode.getLabel() + " (" + currentValue + ")");
-		} else {
-			this.labelIds.put(treeNode.getLabel(), 0);
-		}
 	}
 	
 	private Tree getParentTree(ASTNode astNode) {
@@ -80,7 +79,6 @@ public class TreeVisitor extends GeneralVisitor {
 			if (!text.equals("")) {
 				Tree newTreeNode = new Tree(NodeLabel.getText(object));
 				newTreeNode.setLineNumber(lineNumber);
-				this.makeLabelUnique(newTreeNode);
 				treeNode.addChild(newTreeNode);
 			}
 		}
@@ -88,8 +86,7 @@ public class TreeVisitor extends GeneralVisitor {
 	
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		// For now we're comparing one method to another method, so the unique label IDs can start over
-		this.labelIds = new HashMap<String, Integer>();
+		// LABEL UNIQUENESS DONE IN PQ-GRAM, nothing left here right now
 		return super.visit(node);
 	}
 

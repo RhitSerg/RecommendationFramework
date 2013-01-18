@@ -1,31 +1,71 @@
 package astrecognition.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Tree {
 	protected Tree parent;
 	protected List<Tree> children;
 	private String label;
+	private int id;
 	private int lineNumber;
+	private int startPosition;
+	private int endPosition;
 
 	public Tree(Tree parent, String label) {
 		this.label = label;
 		this.parent = parent;
 		this.children = new ArrayList<Tree>();
 		this.lineNumber = 0;
+		this.id = 0;
+		this.startPosition = 0;
+		this.endPosition = 0;
 	}
 	
 	public Tree(String label) {
 		this(null, label);
 	}
-
-	public String getLabel() {
+	
+	public String getOriginalLabel() {
 		return this.label;
 	}
 	
-	public void setLabel(String label) {
-		this.label = label;
+	public void setOriginalLabel(String originalLabel) {
+		this.label = originalLabel;
+	}
+	
+	public String getUniqueLabel() {
+		String uniqueLabel = this.label;
+		if (this.id > 0) {
+			uniqueLabel += ":" + this.id;
+		}
+		return uniqueLabel;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getStartPosition() {
+		return this.startPosition;
+	}
+	
+	public void setStartPosition(int startPosition) {
+		this.startPosition = startPosition;
+	}
+	
+	public int getEndPosition() {
+		return this.endPosition;
+	}
+	
+	public void setEndPosition(int endPosition) {
+		this.endPosition = endPosition;
 	}
 	
 	public Tree getParent() {
@@ -68,7 +108,7 @@ public class Tree {
 	}
 
 	public Tree find(String label) {
-		if (this.label.equals(label)) {
+		if (this.getUniqueLabel().equals(label)) {
 			return this;
 		} else {
 			for (Tree t : this.children) {
@@ -81,6 +121,31 @@ public class Tree {
 		return null;
 	}
 	
+	private boolean isTopLevelElement() {
+		// Need to restart the labeling at top level elements, so this is our place to indicate what is top-level right now
+		return this.getOriginalLabel().equals("MethodDeclaration");
+	}
+	
+	public Tree makeLabelsUnique(Map<String, Integer> labelIds) {
+		if (this.id == 0) {
+			if (this.isTopLevelElement()) {
+				labelIds = new HashMap<String, Integer>();
+			}
+			if (labelIds.containsKey(this.getOriginalLabel())) {
+				int currentValue = labelIds.get(this.getOriginalLabel());
+				labelIds.put(this.getOriginalLabel(), currentValue + 1);
+				this.setId(currentValue + 1);
+			} else {
+				labelIds.put(this.getOriginalLabel(), 0);
+			}
+			for (Tree child : this.children) {
+				child.makeLabelsUnique(labelIds);
+			}
+		}
+		
+		return this;
+	}
+	
 	public void setLineNumber(int lineNumber) {
 		this.lineNumber = lineNumber;
 	}
@@ -90,15 +155,6 @@ public class Tree {
 	}
 
 	public String toString() {
-		StringBuilder treeString = new StringBuilder();
-		treeString.append(this.label);
-		if (this.children.size() > 0) {
-			treeString.append("\n");
-		}
-		for (Tree child : this.children) {
-			treeString.append(this.label + ":" + child.toString());
-			treeString.append("\n");
-		}
-		return treeString.toString();
+		return this.getUniqueLabel();
 	}
 }
