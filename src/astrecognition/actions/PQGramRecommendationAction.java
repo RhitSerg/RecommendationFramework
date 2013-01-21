@@ -7,6 +7,8 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
@@ -18,7 +20,7 @@ import astrecognition.model.Tree;
 /**
  * Finds recommended steps and shows them to the user
  */
-public class PQGramRecommendationAction extends PQGramAction {
+public class PQGramRecommendationAction extends PQGramAction implements IPropertyListener {
 	
 	private static String RECOMMENDATION_TOOLTIP = "Show recommended edits";
 	private List steps;
@@ -48,6 +50,7 @@ public class PQGramRecommendationAction extends PQGramAction {
 
 	@Override
 	public void run() {
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().addPropertyListener(this);
 		Collection<Edit> edits = this.getSourceTargetEdits();
 		IResource resource = (IResource) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput().getAdapter(IResource.class);
 		try {
@@ -69,6 +72,13 @@ public class PQGramRecommendationAction extends PQGramAction {
 			}
 		}
 		this.setListElements(this.getSourceTargetEdits());
+	}
+
+	@Override
+	public void propertyChanged(Object source, int propId) {
+		if (propId == IEditorPart.PROP_DIRTY) {
+			this.run();
+		}
 	}
 
 }

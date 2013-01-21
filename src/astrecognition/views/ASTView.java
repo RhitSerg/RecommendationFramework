@@ -95,7 +95,6 @@ public class ASTView extends AbstractView {
 	}
 
 	private class ViewLabelProvider extends LabelProvider {
-
 		public String getText(Object obj) {
 			return obj.toString();
 		}
