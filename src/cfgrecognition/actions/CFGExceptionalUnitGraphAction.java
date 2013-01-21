@@ -117,7 +117,6 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 
 		while (it.hasNext()) {
 			Stmt s = (Stmt) it.next();
-			List<UnitBox> ub = s.getUnitBoxes();
 			String label;
 
 			if (s instanceof AssignStmt) {
