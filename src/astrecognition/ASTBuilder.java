@@ -1,5 +1,7 @@
 package astrecognition;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,8 +18,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import astrecognition.model.Tree;
-import astrecognition.visitors.SimplifierVisitor;
-import astrecognition.visitors.TreeVisitor;
+import astrecognition.visitors.GeneralVisitor;
 
 /**
  * Builds abstract syntax trees from the given Java workspace
@@ -28,12 +29,12 @@ public class ASTBuilder {
 	private static final String JDT_NATURE = "org.eclipse.jdt.core.javanature";
 	private static String PROJECT_LABEL = "Project";
 	
-	public static Tree getWorkspaceASTs() {
+	public static Tree getWorkspaceASTs(Class<? extends GeneralVisitor> visitorClass) {
 		Tree tree = new Tree(PROJECT_LABEL);
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			try {
 				if (project.isNatureEnabled(JDT_NATURE)) {
-					for (Tree child : getPackages(project)) {
+					for (Tree child : getPackages(project, visitorClass)) {
 						tree.addChild(child);
 					}
 				}
@@ -44,25 +45,31 @@ public class ASTBuilder {
 		return tree;
 	}
 	
-	public static Collection<Tree> getPackages(IProject project) throws JavaModelException {
+	public static Collection<Tree> getPackages(IProject project, Class<? extends GeneralVisitor> visitorClass) throws JavaModelException {
 		Collection<Tree> packagesTrees = new ArrayList<Tree>();
 		for (IPackageFragment packageFragment : JavaCore.create(project).getPackageFragments()) {
 			if (packageFragment.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				packagesTrees.addAll(getPackageAST(packageFragment));
+				packagesTrees.addAll(getPackageAST(packageFragment, visitorClass));
 			}
 		}
 		return packagesTrees;
 	}
 	
-	private static Collection<Tree> getPackageAST(IPackageFragment packageFragment) throws JavaModelException {
+	private static Collection<Tree> getPackageAST(IPackageFragment packageFragment, Class<? extends GeneralVisitor> visitorClass) throws JavaModelException {
 		Collection<Tree> compilationUnitTrees = new ArrayList<Tree>();
 		for (ICompilationUnit unit : packageFragment.getCompilationUnits()) {
-			CompilationUnit parse = parse(unit);
-			TreeVisitor visitor = new SimplifierVisitor(parse); // Working on converting loops and other equivalent forms
-			//TreeVisitor visitor = new TreeVisitor(); // This just produces the straightforward ASTs
-			parse.accept(visitor);
-
-			compilationUnitTrees.add(visitor.getRoot());
+			try {
+				Constructor<? extends GeneralVisitor> constructor = visitorClass.getDeclaredConstructor(CompilationUnit.class);
+				CompilationUnit parse = parse(unit);
+				GeneralVisitor visitor = constructor.newInstance(parse);
+				parse.accept(visitor);
+				compilationUnitTrees.add(visitor.getRoot());
+			} catch (NoSuchMethodException | SecurityException e) {
+			} catch (InstantiationException e) {
+			} catch (IllegalAccessException e) {
+			} catch (IllegalArgumentException e) {
+			} catch (InvocationTargetException e) {
+			}
 		}
 		return compilationUnitTrees;
 	}

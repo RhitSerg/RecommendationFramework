@@ -8,6 +8,8 @@ import org.eclipse.jface.action.Action;
 import pqgram.PQGram;
 import astrecognition.ASTBuilder;
 import astrecognition.model.Tree;
+import astrecognition.visitors.GeneralVisitor;
+import astrecognition.visitors.SimplifierVisitor;
 
 /**
  * Base class for actions requiring ASTs and pq-Gram functionality
@@ -16,9 +18,10 @@ public abstract class PQGramAction extends Action {
 	
 	protected static int P = 2;
 	protected static int Q = 3;
+	protected Class<? extends GeneralVisitor> VISITOR_CLASS = SimplifierVisitor.class;
 	
 	protected Tree getWorkspaceTree() {
-		return ASTBuilder.getWorkspaceASTs();
+		return ASTBuilder.getWorkspaceASTs(VISITOR_CLASS);
 	}
 	
 	private Tree getTypeDeclarationTree(Tree workspaceTree) {

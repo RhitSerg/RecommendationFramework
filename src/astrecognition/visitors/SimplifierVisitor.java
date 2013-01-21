@@ -1,12 +1,10 @@
 package astrecognition.visitors;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.NumberLiteral;
@@ -28,11 +26,11 @@ public class SimplifierVisitor extends TreeVisitor {
 	
 	@Override
 	public boolean visit(PrimitiveType node) {
-//		this.skipVisit(node);
 		return true;
 	}
-
-	@Override
+	
+	// CURRENTLY NOT CONVERTING DO-WHILE CONSTRUCTS
+	/*@Override
 	public void endVisit(DoStatement node) {
 		Tree nodeTree = this.nodes.get(node);
 		int numChildren = nodeTree.getChildren().size();
@@ -46,7 +44,7 @@ public class SimplifierVisitor extends TreeVisitor {
 			nodeTree.addChild(nodeTreeChildren.get(i));
 		}
 		super.endVisit(node);
-	}
+	}*/
 
 	@Override
 	public void endVisit(ForStatement node) {

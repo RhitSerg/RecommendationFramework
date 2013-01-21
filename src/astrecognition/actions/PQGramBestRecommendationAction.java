@@ -39,7 +39,7 @@ public class PQGramBestRecommendationAction extends PQGramAction {
 			ProjectNameDialog dialog = new ProjectNameDialog(Display
 					.getDefault().getActiveShell());
 			project = dialog.getProject();
-			Collection<Tree> packages = ASTBuilder.getPackages(project.getProject());
+			Collection<Tree> packages = ASTBuilder.getPackages(project.getProject(), VISITOR_CLASS);
 			this.parentView.showMessage("Selected project", "You selected: " + project.getElementName() + ", and it has " + packages.size() + " packages.");
 		} catch (Exception e) {
 			Activator.log(Status.ERROR, e.getMessage(), e);

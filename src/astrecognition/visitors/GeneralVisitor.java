@@ -87,10 +87,14 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
+import astrecognition.model.Tree;
+
 /**
  * Base class for visiting all AST node types
  */
 public abstract class GeneralVisitor extends ASTVisitor {
+	
+	public abstract Tree getRoot();
 	
 	protected abstract void generalVisit(ASTNode node);
 	protected abstract void skipVisit(ASTNode node);
