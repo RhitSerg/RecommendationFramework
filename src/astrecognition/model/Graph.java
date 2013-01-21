@@ -11,6 +11,7 @@ public abstract class Graph implements Comparable<Graph> {
 	public abstract Collection<Graph> getConnections();
 	public abstract String getLabel();
 	public abstract String getUniqueLabel();
+	public abstract String toString();
 	
 	@Override
 	public boolean equals(Object obj) {

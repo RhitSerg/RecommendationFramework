@@ -1,48 +1,149 @@
 package cfgrecognition.views;
 
+import java.util.List;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
-import astrecognition.actions.PQGramDistanceAction;
-import astrecognition.actions.PQGramRecommendationAction;
+import soot.Body;
+import soot.toolkits.graph.ExceptionalUnitGraph;
+import astrecognition.Activator;
 import astrecognition.views.AbstractView;
+import cfgrecognition.actions.CFGExceptionalUnitGraphAction;
+import cfgrecognition.model.CFG;
 
 public class CFGView extends AbstractView {
-	
-	private Action pqGramDistanceAction;
-	private Action pqGramRecommendationAction;
-	private List recommendedEdits;
+
+	private TreeViewer viewer;
 
 	@Override
 	public void createPartControl(Composite parent) {
-		this.recommendedEdits = new List(parent, 0);
-		this.makeActions();
+		this.viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL);
+		ViewContentProvider viewContentProvider = new ViewContentProvider();
+
+		this.viewer.setContentProvider(viewContentProvider);
+		this.viewer.setLabelProvider(new ViewLabelProvider());
+		this.viewer.setInput(getViewSite());
 		this.contributeToActionBars();
 	}
 
 	@Override
 	public void setFocus() {
-		this.recommendedEdits.setFocus();
+		this.viewer.getControl().setFocus();
 	}
-	
+
 	private void contributeToActionBars() {
 		IActionBars bars = this.getViewSite().getActionBars();
 		this.fillLocalToolBar(bars.getToolBarManager());
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(this.pqGramDistanceAction);
-		manager.add(new Separator());
-		manager.add(this.pqGramRecommendationAction);
+		manager.add(new Action() {
+			public void run() {
+				CFGView.this.viewer
+						.setContentProvider(new ViewContentProvider());
+			}
+		});
+		manager.add(new CFGExceptionalUnitGraphAction(this));
 	}
 
-	private void makeActions() {
-		this.pqGramDistanceAction = new PQGramDistanceAction(this);
-		this.pqGramRecommendationAction = new PQGramRecommendationAction(this.recommendedEdits);
+	private class ViewContentProvider implements IStructuredContentProvider,
+			ITreeContentProvider {
+		private CFG root;
+
+		public Object[] getElements(Object parent) {
+			if (parent.equals(getViewSite())) {
+				if (this.root == null) {
+					IJavaProject project = null;
+					try {
+						ProjectNameDialog dialog = new ProjectNameDialog(
+								Display.getDefault().getActiveShell());
+
+						project = dialog.getProject();
+					} catch (Exception e) {
+						Activator.log(Status.ERROR, e.getMessage(), e);
+					}
+
+					Activator.setIJavaProject(project);
+
+					List<ExceptionalUnitGraph> graphs = CFGExceptionalUnitGraphAction
+							.getExceptionalUnitGraphs();
+					Body b1 = graphs.get(1).getBody();
+					System.out.println("Body");
+					System.out.println(b1.toString());
+
+					this.root = CFGExceptionalUnitGraphAction.getCFG(b1);
+					System.out.println("root = " + this.root.getLabel());
+				}
+
+				return getChildren(root);
+			}
+			return getChildren(parent);
+		}
+
+		public Object getParent(Object child) {
+			if (child instanceof CFG) {
+				return ((CFG) child).getParent();
+			}
+			return null;
+		}
+
+		public Object[] getChildren(Object parent) {
+			if (parent instanceof CFG) {
+				return ((CFG) parent).getConnections().toArray();
+			}
+			return new Object[0];
+		}
+
+		public boolean hasChildren(Object parent) {
+			if (parent instanceof CFG)
+				return !((CFG) parent).isSink();
+			return false;
+		}
+
+		public void dispose() {
+
+		}
+
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+
+		}
+	}
+
+	private class ViewLabelProvider extends LabelProvider {
+
+		public String getText(Object obj) {
+			return obj.toString();
+		}
+
+		public Image getImage(Object obj) {
+			String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
+			if (obj instanceof CFG) {
+				CFG cfg = (CFG) obj;
+				if (!cfg.isSink()) {
+					imageKey = ISharedImages.IMG_OBJ_FOLDER;
+				}
+			}
+			return PlatformUI.getWorkbench().getSharedImages()
+					.getImage(imageKey);
+		}
 	}
 
 }
