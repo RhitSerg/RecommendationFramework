@@ -1,11 +1,12 @@
 package astrecognition.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tree {
+public class Tree extends Graph {
 	protected Tree parent;
 	protected List<Tree> children;
 	private String label;
@@ -98,8 +99,8 @@ public class Tree {
 			return true;
 		}
 
-		for (Tree t : children) {
-			if (t.isDescendant(tree)) {
+		for (Graph t : children) {
+			if (((Tree) t).isDescendant(tree)) {
 				return true;
 			}
 		}
@@ -111,8 +112,8 @@ public class Tree {
 		if (this.getUniqueLabel().equals(label)) {
 			return this;
 		} else {
-			for (Tree t : this.children) {
-				Tree goal = t.find(label);
+			for (Graph t : this.children) {
+				Tree goal = ((Tree) t).find(label);
 				if (null != goal) {
 					return goal;
 				}
@@ -138,8 +139,8 @@ public class Tree {
 			} else {
 				labelIds.put(this.getOriginalLabel(), 0);
 			}
-			for (Tree child : this.children) {
-				child.makeLabelsUnique(labelIds);
+			for (Graph child : this.children) {
+				((Tree) child).makeLabelsUnique(labelIds);
 			}
 		}
 		
@@ -156,5 +157,32 @@ public class Tree {
 
 	public String toString() {
 		return this.getUniqueLabel();
+	}
+
+	@Override
+	public int compareTo(Graph graph) {
+		if (graph instanceof Tree) {
+			return this.getUniqueLabel().compareTo(((Tree) graph).getUniqueLabel());
+		}
+		return -1;
+	}
+	
+	@Override
+	public boolean isSink() {
+		return this.isLeaf();
+	}
+	
+	@Override
+	public Collection<Graph> getConnections() {
+		Collection<Graph> connections = new ArrayList<Graph>();
+		for (Tree tree : this.getChildren()) {
+			connections.add((Graph) tree);
+		}
+		return connections;
+	}
+	
+	@Override
+	public String getLabel() {
+		return this.label;
 	}
 }

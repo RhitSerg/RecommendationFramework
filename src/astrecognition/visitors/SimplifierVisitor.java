@@ -86,8 +86,27 @@ public class SimplifierVisitor extends TreeVisitor {
 	
 	@Override
 	public void endVisit(SimpleName node) {
-		this.nodes.get(node).deleteChild(1); // Deleting repeated name
-		this.nodes.get(node).deleteChild(0); // Deleting Expression type binding
+		// Replacing SimpleName nodes with just the identifier
+		Tree simpleNameNode = this.nodes.get(node);
+		Tree simpleNameParentNode = simpleNameNode.getParent();
+		int simpleNamePosition = simpleNameParentNode.getChildren().indexOf(simpleNameNode);
+		Tree identifierNode = simpleNameNode.getChildren().get(simpleNameNode.getChildren().size() - 1);
+		identifierNode.setParent(simpleNameParentNode);
+		simpleNameParentNode.getChildren().remove(simpleNamePosition);
+		simpleNameParentNode.getChildren().add(simpleNamePosition, identifierNode);
+		super.endVisit(node);
+	}
+	
+	@Override
+	public void endVisit(NumberLiteral node) {
+		Tree numberLiteralNode = this.nodes.get(node);
+		Tree numberLiteralParentNode = numberLiteralNode.getParent();
+		int numberLiteralPosition = numberLiteralParentNode.getChildren().indexOf(numberLiteralNode);
+		Tree tokenNode = numberLiteralNode.getChildren().get(numberLiteralNode.getChildren().size() - 1);
+		tokenNode.setParent(numberLiteralParentNode);
+		numberLiteralParentNode.getChildren().remove(numberLiteralPosition);
+		numberLiteralParentNode.getChildren().add(numberLiteralPosition, tokenNode);
+		//this.nodes.get(node).deleteChild(0); // Deleting Expression type binding
 		super.endVisit(node);
 	}
 	
@@ -104,7 +123,7 @@ public class SimplifierVisitor extends TreeVisitor {
 		Tree treeNode = this.nodes.get(node);
 		Tree extraPiece = treeNode.getChildren().get(2);
 		Tree assignee = treeNode.getChildren().get(1);
-		String variable = assignee.getChildren().get(0).getOriginalLabel();
+		String variable = assignee.getOriginalLabel();
 		treeNode.deleteChild(0);
 		treeNode.deleteChild(0);
 		treeNode.deleteChild(0);
@@ -113,12 +132,14 @@ public class SimplifierVisitor extends TreeVisitor {
 		Tree infixExpressionTree = new Tree("InfixExpression");
 		Tree opTree = new Tree("OPERATOR: '" + operator + "'");
 		opTree.setLineNumber(treeNode.getLineNumber());
+		opTree.setStartPosition(treeNode.getStartPosition());
+		opTree.setEndPosition(treeNode.getEndPosition());
 		infixExpressionTree.addChild(opTree);
-		Tree simpleNameTree = new Tree("SimpleName");
 		Tree idTree = new Tree(variable);
 		idTree.setLineNumber(treeNode.getLineNumber());
-		simpleNameTree.addChild(idTree);
-		infixExpressionTree.addChild(simpleNameTree);
+		idTree.setStartPosition(treeNode.getStartPosition());
+		idTree.setEndPosition(treeNode.getEndPosition());
+		infixExpressionTree.addChild(idTree);
 		infixExpressionTree.addChild(extraPiece);
 		treeNode.addChild(infixExpressionTree);
 	}
@@ -141,12 +162,6 @@ public class SimplifierVisitor extends TreeVisitor {
 		super.endVisit(node);
 	}
 	
-	@Override
-	public void endVisit(NumberLiteral node) {
-		this.nodes.get(node).deleteChild(0); // Deleting Expression type binding
-		super.endVisit(node);
-	}
-	
 	private void convertToAssignmentNode(ASTNode node) {
 		Tree treeNode = this.nodes.get(node);
 		List<Tree> treeChildren = treeNode.getChildren();
@@ -157,30 +172,38 @@ public class SimplifierVisitor extends TreeVisitor {
 		} else {
 			operator = "-";
 		}
-		Tree variableTree = treeChildren.get(2).getChildren().get(0);
+		Tree variableTree = treeChildren.get(2);
 		String variable = variableTree.getOriginalLabel();
 		treeNode.deleteChild(0);
 		treeNode.deleteChild(0);
 		treeNode.deleteChild(0);
 		treeNode.setOriginalLabel("Assignment");
-		treeNode.addChild(new Tree("OPERATOR: '='"));
-		Tree simpleNameTree = new Tree("SimpleName");
+		Tree opTree = new Tree("OPERATOR: '='");
+		opTree.setLineNumber(treeNode.getLineNumber());
+		opTree.setStartPosition(treeNode.getStartPosition());
+		opTree.setEndPosition(treeNode.getEndPosition());
+		treeNode.addChild(opTree);
 		Tree idTree = new Tree(variable);
 		idTree.setLineNumber(treeNode.getLineNumber());
-		simpleNameTree.addChild(idTree);
-		treeNode.addChild(simpleNameTree);
+		idTree.setStartPosition(treeNode.getStartPosition());
+		idTree.setEndPosition(treeNode.getEndPosition());
+		treeNode.addChild(idTree);
 		Tree infixExpressionTree = new Tree("InfixExpression");
-		infixExpressionTree.addChild(new Tree("OPERATOR: '" + operator + "'"));
-		Tree simpleNameTree2 = new Tree("SimpleName");
+		Tree opTree2 = new Tree("OPERATOR: '" + operator + "'");
+		opTree2.setLineNumber(treeNode.getLineNumber());
+		opTree2.setStartPosition(treeNode.getStartPosition());
+		opTree2.setEndPosition(treeNode.getEndPosition());
+		infixExpressionTree.addChild(opTree2);
 		Tree idTree2 = new Tree(variable);
 		idTree2.setLineNumber(treeNode.getLineNumber());
-		simpleNameTree2.addChild(idTree2);
-		infixExpressionTree.addChild(simpleNameTree2);
-		Tree numberLiteralTree = new Tree("NumberLiteral");
+		idTree2.setStartPosition(treeNode.getStartPosition());
+		idTree2.setEndPosition(treeNode.getEndPosition());
+		infixExpressionTree.addChild(idTree2);
 		Tree tokenTree = new Tree("TOKEN: '1'");
 		tokenTree.setLineNumber(treeNode.getLineNumber());
-		numberLiteralTree.addChild(tokenTree);
-		infixExpressionTree.addChild(numberLiteralTree);
+		tokenTree.setStartPosition(treeNode.getStartPosition());
+		tokenTree.setEndPosition(treeNode.getEndPosition());
+		infixExpressionTree.addChild(tokenTree);
 		treeNode.addChild(infixExpressionTree);
 	}
 	

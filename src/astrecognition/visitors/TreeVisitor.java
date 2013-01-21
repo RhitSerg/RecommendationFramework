@@ -34,7 +34,7 @@ public class TreeVisitor extends GeneralVisitor {
 	protected void generalVisit(ASTNode node) {
 		Tree current = new Tree(NodeLabel.getLabel(node));
 		current.setStartPosition(node.getStartPosition());
-		current.setEndPosition(node.getStartPosition() + node.getLength() - 1);
+		current.setEndPosition(node.getStartPosition() + node.getLength());
 		this.addToTree(node, current);
 		addAttributeChildren(node, current);
 	}
@@ -79,6 +79,8 @@ public class TreeVisitor extends GeneralVisitor {
 			if (!text.equals("")) {
 				Tree newTreeNode = new Tree(NodeLabel.getText(object));
 				newTreeNode.setLineNumber(lineNumber);
+				newTreeNode.setStartPosition(astNode.getStartPosition());
+				newTreeNode.setEndPosition(astNode.getStartPosition() + astNode.getLength());
 				treeNode.addChild(newTreeNode);
 			}
 		}

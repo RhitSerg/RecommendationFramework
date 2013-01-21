@@ -11,7 +11,6 @@ import org.eclipse.ui.PlatformUI;
 
 import pqgram.PQGram;
 import pqgram.PQGramRecommendation;
-import pqgram.PQGramUniqueLabels;
 import pqgram.Profile;
 import pqgram.edits.Edit;
 import astrecognition.model.Tree;
@@ -43,8 +42,8 @@ public class PQGramBestRecommendationAction extends PQGramAction {
 			}
 		});
 		this.parentView.showMessage("Matched method", "Your source code best matched " + bestTargetMethodBody.getChildren().get(5).getChildren().get(0).getOriginalLabel());
-		Profile sourceProfile = PQGramUniqueLabels.getProfile(sourceMethodBody, 2, 3);
-		Profile targetProfile = PQGramUniqueLabels.getProfile(bestTargetMethodBody.getChildren().get(6), 2, 3);
+		Profile sourceProfile = PQGram.getProfile(sourceMethodBody, 2, 3);
+		Profile targetProfile = PQGram.getProfile(bestTargetMethodBody.getChildren().get(6), 2, 3);
 		return PQGramRecommendation.getEdits(sourceProfile, targetProfile, sourceMethodBody, bestTargetMethodBody);
 	}
 	

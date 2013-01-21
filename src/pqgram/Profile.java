@@ -1,11 +1,14 @@
 package pqgram;
+
+import astrecognition.model.Graph;
+
 /**
  * Representation of profiles as in the pq-Gram algorithm
  */
-public class Profile extends Multiset<Tuple<String>> {
+public class Profile extends Multiset<Tuple<Graph>> {
 	
-	public void add(String[] tuple) {
-		Tuple<String> t = new Tuple<String>(tuple.length);
+	public void add(Graph[] tuple) {
+		Tuple<Graph> t = new Tuple<Graph>(tuple.length);
 		for (int i = 0; i < tuple.length; i++) {
 			t.set(i, tuple[i]);
 		}
@@ -27,16 +30,16 @@ public class Profile extends Multiset<Tuple<String>> {
 	@Override
 	public Profile clone() {
 		Profile i = new Profile();
-		for (Tuple<String> tup : this.getAllElements()) {
+		for (Tuple<Graph> tup : this.getAllElements()) {
 			i.add(tup);
 		}
 		return i;
 	}
 	
-	private Profile makeIndex(Multiset<Tuple<String>> set) {
+	private Profile makeIndex(Multiset<Tuple<Graph>> set) {
 		Profile i = new Profile();
 		
-		for (Tuple<String> tup : set.getAllElements()) {
+		for (Tuple<Graph> tup : set.getAllElements()) {
 			i.add(tup);
 		}
 		
@@ -46,7 +49,7 @@ public class Profile extends Multiset<Tuple<String>> {
 	@Override
 	public String toString() {
 		String str = "";
-		for (Tuple<String> tup : this.getAllElements()) {
+		for (Tuple<Graph> tup : this.getAllElements()) {
 			for (int i = 0; i < tup.length(); i++) {
 				str += tup.get(i) + " ";
 			}

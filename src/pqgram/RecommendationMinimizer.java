@@ -19,6 +19,14 @@ public class RecommendationMinimizer {
 		Map<String, String> deletedToParent = new HashMap<String, String>();
 		// add all unaffected deletions
 		for (Deletion deletion : deletions) {
+			String firstDeletionpart = deletion.getA();
+			String secondDeletionPart = deletion.getB();
+			if (firstDeletionpart.contains(":")) {
+				firstDeletionpart = firstDeletionpart.substring(0, firstDeletionpart.indexOf(':'));
+			}
+			if (secondDeletionPart.contains(":")) {
+				secondDeletionPart = secondDeletionPart.substring(0, secondDeletionPart.indexOf(':'));
+			}
 			if (relabelings.containsKey(deletion.getA())) {
 				deletion.setA(relabelings.get(deletion.getA()));
 			}
@@ -34,9 +42,12 @@ public class RecommendationMinimizer {
 					}
 					deletion.setA(newParentLabel);
 				}
+				newParentLabel = getOriginalLabel(newParentLabel);
 				boolean hasMatchingInsertion = false;
 				for (Insertion insertion : insertions) { // check for a matching insertion
-					if (insertion.getA().equals(newParentLabel) && insertion.getB().equals(deletion.getB())) { // if the deletion and insertion are inverses, we don't need them
+					String firstInsertionPart = getOriginalLabel(insertion.getA());
+					String secondInsertionPart = getOriginalLabel(insertion.getB());
+					if (firstInsertionPart.equals(newParentLabel) && secondInsertionPart.equals(secondDeletionPart)) { // if the deletion and insertion are inverses, we don't need them
 						insertionsToRemove.add(insertion);
 						hasMatchingInsertion = true;
 					}
@@ -52,6 +63,13 @@ public class RecommendationMinimizer {
 		
 		insertions.removeAll(insertionsToRemove);
 		deletions.removeAll(deletionsToRemove);
+	}
+	
+	private static String getOriginalLabel(String uniqueLabel) {
+		if (uniqueLabel.contains(":")) {
+			return uniqueLabel.substring(0, uniqueLabel.indexOf(':'));
+		}
+		return uniqueLabel;
 	}
 
 	public static void minimizeInsertions(List<Insertion> insertions, List<Deletion> deletions, Map<String, String> relabelings) {

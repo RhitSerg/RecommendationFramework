@@ -2,6 +2,7 @@ package pqgram;
 
 import java.util.Arrays;
 
+import astrecognition.model.Graph;
 import astrecognition.model.Tree;
 /**
  * Computes pq-Gram distance (adapted from http://www.vldb2005.org/program/paper/wed/p301-augsten.pdf)
@@ -9,7 +10,7 @@ import astrecognition.model.Tree;
 public class PQGram {
 	public static String STAR_LABEL = "*";
 
-	public static double getDistance(Tree T1, Tree T2, int p, int q) {
+	public static double getDistance(Graph T1, Graph T2, int p, int q) {
 		Profile profile = PQGram.getProfile(T1, p, q);
 		Profile profile2 = PQGram.getProfile(T2, p, q);
 		Profile mUnion = profile.union(profile2);
@@ -17,36 +18,36 @@ public class PQGram {
 		return 1 - (2.0 * mIntersection.size()) / mUnion.size();
 	}
 
-	public static Profile getProfile(Tree t, int p, int q) {
+	public static Profile getProfile(Graph t, int p, int q) {
 		Profile profile = new Profile();
-		String[] stem = new String[p];
-		Arrays.fill(stem, STAR_LABEL);
+		Graph[] stem = new Graph[p];
+		Arrays.fill(stem, new Tree(STAR_LABEL));
 		profile = getLabelTuples(t, p, q, profile, t, stem);
 		return profile;
 	}
 
-	private static Profile getLabelTuples(Tree g, int p, int q, Profile profile, Tree a, String[] stem) {
-		String[] base = new String[q];
-		Arrays.fill(base, STAR_LABEL);
-		stem = shift(stem, a.getOriginalLabel());
-		if (a.isLeaf()) {
+	private static Profile getLabelTuples(Graph g, int p, int q, Profile profile, Graph a, Graph[] stem) {
+		Graph[] base = new Graph[q];
+		Arrays.fill(base, new Tree(STAR_LABEL));
+		stem = shift(stem, a);
+		if (a.isSink()) {
 			profile.add(concatenate(stem, base));
 		} else {
-			for (Tree c : a.getChildren()) {
-				base = shift(base, c.getOriginalLabel());
+			for (Graph c : a.getConnections()) {
+				base = shift(base, c);
 				profile.add(concatenate(stem, base));
 				profile = getLabelTuples(g, p, q, profile, c, stem);
 			}
 			for (int k = 1; k < q; k++) {
-				base = shift(base, STAR_LABEL);
+				base = shift(base, new Tree(STAR_LABEL));
 				profile.add(concatenate(stem, base));
 			}
 		}
 		return profile;
 	}
 
-	private static String[] concatenate(String[] stem, String[] base) {
-		String[] result = new String[stem.length + base.length];
+	private static Graph[] concatenate(Graph[] stem, Graph[] base) {
+		Graph[] result = new Graph[stem.length + base.length];
 		for (int i = 0; i < stem.length; i++) {
 			result[i] = stem[i];
 		}
@@ -56,12 +57,12 @@ public class PQGram {
 		return result;
 	}
 
-	private static String[] shift(String[] arr, String label) {
-		String[] newArr = new String[arr.length];
+	private static Graph[] shift(Graph[] arr, Graph graph) {
+		Graph[] newArr = new Graph[arr.length];
 		for (int i = 1; i < arr.length; i++) {
 			newArr[i - 1] = arr[i];
 		}
-		newArr[arr.length - 1] = label;
+		newArr[arr.length - 1] = graph;
 		return newArr;
 	}
 

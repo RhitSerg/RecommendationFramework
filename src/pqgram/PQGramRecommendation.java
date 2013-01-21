@@ -14,6 +14,7 @@ import pqgram.edits.Edit;
 import pqgram.edits.Insertion;
 import pqgram.edits.PositionalEdit;
 import pqgram.edits.Relabeling;
+import astrecognition.model.Graph;
 import astrecognition.model.Tree;
 /**
  * Attempts to find minimal number of steps to transform a source tree to the given target via insertions, deletions, and relabelings
@@ -23,9 +24,7 @@ public class PQGramRecommendation {
 	public static List<Edit> getEdits(Profile profile1, Profile profile2, Tree sourceTree, Tree targetTree) {
 		Profile common = profile1.intersect(profile2);
 		Profile missing = profile2.difference(common);
-		System.out.println(missing);
 		Profile extra = profile1.difference(common);
-		System.out.println(extra);
 
 		Map<String, Tree> built = new HashMap<String, Tree>();
 		Map<String, String> childToParent = new HashMap<String, String>();
@@ -33,9 +32,7 @@ public class PQGramRecommendation {
 		buildCommonTrees(common, built, childToParent);
 		
 		List<Deletion> deletions = getDeletions(extra, built, childToParent);
-		Utilities.printList(deletions);
 		List<Insertion> insertions = getInsertions(missing, built, childToParent);
-		Utilities.printList(insertions);
 		
 		// minimizing deletions/insertions by finding eligible relabelings and matching up pairs due to relabeling propagations
 		Map<String, String> relabelings = RecommendationMinimizer.getRelabelings(insertions, deletions, sourceTree, targetTree);
@@ -56,7 +53,9 @@ public class PQGramRecommendation {
 		for (Edit edit : edits) {
 			Tree correspondingTree = sourceTree.find(edit.getA());
 			if (correspondingTree != null) {
-				edit.setLineNumber(sourceTree.find(edit.getA()).getLineNumber());
+				edit.setLineNumber(correspondingTree.getLineNumber());
+				edit.setStartPosition(correspondingTree.getStartPosition());
+				edit.setEndPosition(correspondingTree.getEndPosition());
 			}
 		}
 		
@@ -98,7 +97,7 @@ public class PQGramRecommendation {
 		List<PositionalEdit> edits = new ArrayList<PositionalEdit>();
 		
 		// each 2,3-Gram looks like (ancestor, parent, child1, child2, child3)
-		for (Tuple<String> tup : pieces.getAllElements()) {
+		for (Tuple<Graph> tup : pieces.getAllElements()) {
 			Tree ancestor = getTree(tup.get(0), built);
 			Tree parent = getTree(tup.get(1), built);
 			int position = addChildToParent(ancestor, parent, childToParent);
@@ -106,11 +105,11 @@ public class PQGramRecommendation {
 				edits.add(new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position));
 			}
 			for (int i = 2; i < tup.length(); i++) {				
-				String currentLabel = tup.get(i);
-				Tree currentTree = getTree(currentLabel, built);
+				Graph currentGraph = tup.get(i);
+				Tree currentTree = getTree(currentGraph, built);
 				position = addChildToParent(parent, currentTree, childToParent);
-				if (position >= 0 && !currentLabel.equals(PQGram.STAR_LABEL)) {
-					edits.add(new PositionalEdit(parent.getUniqueLabel(), currentLabel, position));
+				if (position >= 0 && !currentGraph.equals(PQGram.STAR_LABEL)) {
+					edits.add(new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), position));
 				}
 			}
 		}
@@ -132,6 +131,10 @@ public class PQGramRecommendation {
 		return builtTrees.get(label);
 	}
 	
+	private static Tree getTree(Graph graph, Map<String, Tree> builtTrees) {
+		return getTree(graph.getUniqueLabel(), builtTrees);
+	}
+	
 	// hook up a child to its parent if not already done and return position; return -1 if already done
 	private static int addChildToParent(Tree parent, Tree child, Map<String, String> childToParent) {
 		if (!childToParent.containsKey(child.getUniqueLabel())) {
@@ -143,14 +146,14 @@ public class PQGramRecommendation {
 
 	private static Set<Tree> buildCommonTrees(Profile common, Map<String, Tree> built, Map<String, String> childToParent) {
 		Set<Tree> commonTrees = new HashSet<Tree>();
-		for (Tuple<String> tup : common.getAllElements()) {
+		for (Tuple<Graph> tup : common.getAllElements()) {
 			Tree ancestor = getTree(tup.get(0), built);
 			commonTrees.add(ancestor);
 			Tree parent = getTree(tup.get(1), built);
 			addChildToParent(parent, ancestor, childToParent);
 			for (int i = 2; i < tup.length(); i++) {				
-				String currentLabel = tup.get(i);
-				Tree currentTree = getTree(currentLabel, built);
+				Graph currentGraph = tup.get(i);
+				Tree currentTree = getTree(currentGraph, built);
 				commonTrees.add(currentTree);
 				addChildToParent(parent, currentTree, childToParent);
 				commonTrees.remove(currentTree);

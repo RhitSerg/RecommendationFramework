@@ -72,6 +72,7 @@ public class ASTBuilder {
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(unit);
 		parser.setResolveBindings(true);
-		return (CompilationUnit) parser.createAST(null);
+		CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null);
+		return compilationUnit;
 	}
 }
