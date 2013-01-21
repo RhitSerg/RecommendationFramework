@@ -44,7 +44,7 @@ public class ASTBuilder {
 		return tree;
 	}
 	
-	private static Collection<Tree> getPackages(IProject project) throws JavaModelException {
+	public static Collection<Tree> getPackages(IProject project) throws JavaModelException {
 		Collection<Tree> packagesTrees = new ArrayList<Tree>();
 		for (IPackageFragment packageFragment : JavaCore.create(project).getPackageFragments()) {
 			if (packageFragment.getKind() == IPackageFragmentRoot.K_SOURCE) {
