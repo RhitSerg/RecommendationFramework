@@ -2,11 +2,12 @@ package pqgram;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 /**
  * Generic multiset (or bag)
  */
 public class Multiset<T> {
-	private Collection<T> items;
+	private List<T> items;
 	
 	public Multiset() {
 		this.items = new ArrayList<T>();  
@@ -89,6 +90,10 @@ public class Multiset<T> {
 		}
 		
 		return union;
+	}
+	
+	public T get(int i) {
+		return this.items.get(i);
 	}
 
 }

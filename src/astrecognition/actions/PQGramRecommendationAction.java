@@ -1,5 +1,6 @@
 package astrecognition.actions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -58,20 +59,30 @@ public class PQGramRecommendationAction extends PQGramAction implements IPropert
 		} catch (CoreException e1) {
 			e1.printStackTrace();
 		}
+		Collection<String> translatedEdits = new ArrayList<String>();
+		String previousEdit = "";
+		int previousEditLine = -1;
 		for (Edit edit : edits) {
-			IMarker marker;
-			try {
-				marker = resource.createMarker(IMarker.PROBLEM);
-				marker.setAttribute(IMarker.LINE_NUMBER, edit.getLineNumber());
-				marker.setAttribute(IMarker.MESSAGE, edit.toString());
-				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-				marker.setAttribute(IMarker.CHAR_START, edit.getStartPosition());
-				marker.setAttribute(IMarker.CHAR_END, edit.getEndPosition());
-			} catch (CoreException e) {
-				e.printStackTrace();
+			String translatedEdit = RecommendationTranslator.translate(edit);
+			System.out.println(edit.getLineNumber() + ":" + translatedEdit);
+			if (!translatedEdit.isEmpty() && (!translatedEdit.equals(previousEdit) || edit.getLineNumber() != previousEditLine)) {
+				translatedEdits.add(translatedEdit);
+				IMarker marker;
+				try {
+					marker = resource.createMarker(IMarker.PROBLEM);
+					marker.setAttribute(IMarker.LINE_NUMBER, edit.getLineNumber());
+					marker.setAttribute(IMarker.MESSAGE, edit.getLineNumber() + ":" + RecommendationTranslator.translate(edit));
+					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+					marker.setAttribute(IMarker.CHAR_START, edit.getStartPosition());
+					marker.setAttribute(IMarker.CHAR_END, edit.getEndPosition());
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
 			}
+			previousEdit = translatedEdit;
+			previousEditLine = edit.getLineNumber();
 		}
-		this.setListElements(this.getSourceTargetEdits());
+		this.setListElements(translatedEdits);
 	}
 
 	@Override

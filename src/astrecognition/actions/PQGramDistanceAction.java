@@ -4,6 +4,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import astrecognition.Activator;
+import astrecognition.Settings;
 import astrecognition.views.AbstractView;
 
 /**
@@ -25,7 +26,7 @@ public class PQGramDistanceAction extends PQGramAction {
 	@Override
 	public void run() {
 		this.parentView.showMessage(Activator.PLUGIN_ID, String.format(DISTANCE_MESSAGE,
-				P, Q, this.getSourceTargetDistance()));
+				Settings.P, Settings.Q, this.getSourceTargetDistance()));
 	}
 
 }

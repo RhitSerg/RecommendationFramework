@@ -14,6 +14,7 @@ import pqgram.edits.Edit;
 import pqgram.edits.Insertion;
 import pqgram.edits.PositionalEdit;
 import pqgram.edits.Relabeling;
+import astrecognition.Settings;
 import astrecognition.model.Graph;
 import astrecognition.model.Tree;
 /**
@@ -99,16 +100,32 @@ public class PQGramRecommendation {
 		// each 2,3-Gram looks like (ancestor, parent, child1, child2, child3)
 		for (Tuple<Graph> tup : pieces.getAllElements()) {
 			Tree ancestor = getTree(tup.get(0), built);
-			Tree parent = getTree(tup.get(1), built);
-			int position = addChildToParent(ancestor, parent, childToParent);
-			if (position >= 0) {
-				edits.add(new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position));
+			Tree parent = ancestor;
+			int position;
+			for (int i = 1; i < Settings.P; i++) {
+				parent = getTree(tup.get(1), built);
+				position = addChildToParent(ancestor, parent, childToParent);
+				if (position >= 0) {
+					edits.add(new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position));
+				}
+				ancestor = parent;
 			}
-			for (int i = 2; i < tup.length(); i++) {				
+			for (int i = Settings.P; i < tup.length(); i++) {				
 				Graph currentGraph = tup.get(i);
 				Tree currentTree = getTree(currentGraph, built);
 				position = addChildToParent(parent, currentTree, childToParent);
 				if (position >= 0 && !currentGraph.equals(PQGram.STAR_LABEL)) {
+					/*Graph left, right;
+					if (i == Settings.P) {
+						left = null;
+						right = tup.get(i+1);
+					} else if (i == tup.length() - 1) {
+						left = tup.get(i-1);
+						right = null;
+					} else {
+						left = tup.get(i-1);
+						right = tup.get(i+1);
+					}*/
 					edits.add(new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), position));
 				}
 			}
@@ -149,9 +166,13 @@ public class PQGramRecommendation {
 		for (Tuple<Graph> tup : common.getAllElements()) {
 			Tree ancestor = getTree(tup.get(0), built);
 			commonTrees.add(ancestor);
-			Tree parent = getTree(tup.get(1), built);
-			addChildToParent(parent, ancestor, childToParent);
-			for (int i = 2; i < tup.length(); i++) {				
+			Tree parent = ancestor;
+			for (int i = 1; i < Settings.P; i++) {
+				parent = getTree(tup.get(1), built);
+				addChildToParent(parent, ancestor, childToParent);
+				ancestor = parent;
+			}
+			for (int i = Settings.P; i < tup.length(); i++) {				
 				Graph currentGraph = tup.get(i);
 				Tree currentTree = getTree(currentGraph, built);
 				commonTrees.add(currentTree);

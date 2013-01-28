@@ -17,14 +17,12 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import astrecognition.ASTBuilder;
+import astrecognition.Settings;
 import astrecognition.model.Tree;
-import astrecognition.visitors.GeneralVisitor;
-import astrecognition.visitors.SimplifierVisitor;
 
 public class ASTView extends AbstractView {
 	
 	private TreeViewer viewer;
-	private Class<? extends GeneralVisitor> VISITOR_CLASS = SimplifierVisitor.class;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -60,7 +58,7 @@ public class ASTView extends AbstractView {
 		public Object[] getElements(Object parent) {
 			if (parent.equals(getViewSite())) {
 				if (this.root == null) {
-					root = ASTBuilder.getWorkspaceASTs(VISITOR_CLASS).makeLabelsUnique(new HashMap<String, Integer>());
+					root = ASTBuilder.getWorkspaceASTs(Settings.VISITOR_CLASS).makeLabelsUnique(new HashMap<String, Integer>());
 					System.out.println(root);
 				}
 				return getChildren(root);

@@ -94,6 +94,15 @@ public class Tree extends Graph {
 		return this.children.size() == 0;
 	}
 	
+	public int getPositionBetween(Graph left, Graph right) {
+		if (left == null) {
+			return 0;
+		} else if (right == null) {
+			return this.children.size();
+		}
+		return this.children.indexOf(left) + 1;
+	}
+	
 	public boolean isDescendant(Tree tree) {
 		if (children.contains(tree)) {
 			return true;
