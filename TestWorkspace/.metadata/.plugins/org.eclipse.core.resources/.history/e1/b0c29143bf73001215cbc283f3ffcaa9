@@ -1,0 +1,25 @@
+Test Format
+-----------
+Each package corresponds to one algorithm,
+and those algorithms range in complexity.
+
+Within each package, each class corresponds to
+one test case. Each class should contain a
+source and target method, in that order, along
+with comments describing the expected results.
+To help document the intent of each test case,
+the classes should be named in accordance with
+the complexity of the differences between the
+source and target method (e.g. "E1.java"
+indicates that the source and target methods
+have one simple difference).
+
+The comments follow the format specified below:
+1. The actual differences between the source and
+   target are listed, beginning with one of the
+   following and detailing the difference:
+   - (R) for a relabeling
+   - (+) for an extra item
+   - (-) for an area with something missing
+2. Expected pq-Gram difference score estimate
+3. Expected recommended edits
