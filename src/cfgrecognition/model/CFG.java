@@ -9,13 +9,24 @@ public class CFG extends Graph {
 
 	private int id;
 	private String label;
+	private String exactLabel;
 	private List<CFG> connections;
+	private int lineNumber;
 	private CFG parent;
 
-	public CFG(String label, int id) {
+	public CFG(String label, int id, int line) {
 		this.id = id;
 		this.label = label;
+		this.lineNumber = line;
 		this.connections = new ArrayList<CFG>();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CFG) {
+			return this.compareTo((CFG) obj) == 0;
+		}
+		return super.equals(obj);
 	}
 
 	@Override
@@ -31,8 +42,10 @@ public class CFG extends Graph {
 	}
 
 	public int addConnection(CFG cfg) {
-		this.connections.add(cfg);
-		cfg.setParent(this);
+		if (!this.exactLabel.equals(cfg.getExactLabel())) {
+			this.connections.add(cfg);
+			cfg.setParent(this);
+		}
 		return this.connections.size() - 1;
 	}
 
@@ -54,6 +67,14 @@ public class CFG extends Graph {
 		return connections;
 	}
 
+	public String getExactLabel() {
+		return this.exactLabel;
+	}
+
+	public void setExactLabel(String s) {
+		this.exactLabel = s;
+	}
+
 	@Override
 	public String getLabel() {
 		return this.label;
@@ -61,11 +82,19 @@ public class CFG extends Graph {
 
 	@Override
 	public String getUniqueLabel() {
-		return this.label + this.id;
+		return this.id + ": " + this.label;
 	}
 
 	@Override
 	public String toString() {
 		return this.getUniqueLabel();
+	}
+
+	public int getLineNumber() {
+		return this.lineNumber;
+	}
+
+	public int getId() {
+		return this.id;
 	}
 }

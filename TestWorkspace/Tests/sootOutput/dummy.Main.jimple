@@ -1,0 +1,84 @@
+public class dummy.Main extends java.lang.Object
+{
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] args;
+
+        args := @parameter0: java.lang.String[];
+        return;
+
+        return;
+    }
+
+    public void source()
+    {
+        dummy.Main this;
+        int sum, i, temp$0, temp$1, temp$2, temp$3;
+
+        this := @this: dummy.Main;
+        sum = 0;
+        i = 0;
+
+     label0:
+        nop;
+        if i < 10 goto label1;
+
+        goto label2;
+
+     label1:
+        nop;
+        temp$0 = sum;
+        temp$1 = temp$0 + 1;
+        sum = temp$1;
+        nop;
+        temp$2 = i;
+        temp$3 = temp$2 + 1;
+        i = temp$3;
+        goto label0;
+
+     label2:
+        nop;
+        return;
+    }
+
+    public void target()
+    {
+        dummy.Main this;
+        int sum, i, temp$0, temp$1, temp$2, temp$3;
+
+        this := @this: dummy.Main;
+        sum = 0;
+        i = 0;
+
+     label0:
+        nop;
+        if i < 10 goto label1;
+
+        goto label2;
+
+     label1:
+        nop;
+        temp$0 = sum;
+        temp$1 = temp$0 + 1;
+        sum = temp$1;
+        nop;
+        temp$2 = i;
+        temp$3 = temp$2 + 1;
+        i = temp$3;
+        goto label0;
+
+     label2:
+        nop;
+        return;
+    }
+
+    public void <init>()
+    {
+        dummy.Main this;
+
+        this := @this: dummy.Main;
+        specialinvoke this.<java.lang.Object: void <init>()>();
+        return;
+    }
+}

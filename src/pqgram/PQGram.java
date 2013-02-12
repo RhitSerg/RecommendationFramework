@@ -1,11 +1,15 @@
 package pqgram;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import astrecognition.model.Graph;
 import astrecognition.model.Tree;
+import cfgrecognition.model.CFG;
+
 /**
- * Computes pq-Gram distance (adapted from http://www.vldb2005.org/program/paper/wed/p301-augsten.pdf)
+ * Computes pq-Gram distance (adapted from
+ * http://www.vldb2005.org/program/paper/wed/p301-augsten.pdf)
  */
 public class PQGram {
 	public static String STAR_LABEL = "*";
@@ -19,14 +23,25 @@ public class PQGram {
 	}
 
 	public static Profile getProfile(Graph t, int p, int q) {
+		HashSet<Graph> visited = new HashSet<Graph>();
+
 		Profile profile = new Profile();
 		Graph[] stem = new Graph[p];
 		Arrays.fill(stem, new Tree(STAR_LABEL));
-		profile = getLabelTuples(t, p, q, profile, t, stem);
+		profile = getLabelTuples(p, q, profile, t, stem, visited);
 		return profile;
 	}
 
-	private static Profile getLabelTuples(Graph g, int p, int q, Profile profile, Graph a, Graph[] stem) {
+	private static Profile getLabelTuples(int p, int q, Profile profile,
+			Graph a, Graph[] stem, HashSet<Graph> visited) {
+		if (visited.contains(a)) {
+			System.out.println("Revisiting " + a.getUniqueLabel());
+			return profile;
+		}
+
+		System.out.println("Adding " + a.getUniqueLabel());
+		visited.add(a);
+
 		Graph[] base = new Graph[q];
 		Arrays.fill(base, new Tree(STAR_LABEL));
 		stem = shift(stem, a);
@@ -36,7 +51,7 @@ public class PQGram {
 			for (Graph c : a.getConnections()) {
 				base = shift(base, c);
 				profile.add(concatenate(stem, base));
-				profile = getLabelTuples(g, p, q, profile, c, stem);
+				profile = getLabelTuples(p, q, profile, c, stem, visited);
 			}
 			for (int k = 1; k < q; k++) {
 				base = shift(base, new Tree(STAR_LABEL));

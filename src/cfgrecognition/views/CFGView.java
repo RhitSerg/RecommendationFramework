@@ -2,12 +2,11 @@ package cfgrecognition.views;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -24,6 +23,7 @@ import org.eclipse.ui.PlatformUI;
 import soot.Body;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import astrecognition.Activator;
+import astrecognition.model.Graph;
 import astrecognition.views.AbstractView;
 import cfgrecognition.actions.CFGExceptionalUnitGraphAction;
 import cfgrecognition.model.CFG;
@@ -55,13 +55,14 @@ public class CFGView extends AbstractView {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(new CFGExceptionalUnitGraphAction(this));
+		manager.add(new Separator());
 		manager.add(new Action() {
 			public void run() {
 				CFGView.this.viewer
 						.setContentProvider(new ViewContentProvider());
 			}
 		});
-		manager.add(new CFGExceptionalUnitGraphAction(this));
 	}
 
 	private class ViewContentProvider implements IStructuredContentProvider,
@@ -86,11 +87,8 @@ public class CFGView extends AbstractView {
 					List<ExceptionalUnitGraph> graphs = CFGExceptionalUnitGraphAction
 							.getExceptionalUnitGraphs();
 					Body b1 = graphs.get(1).getBody();
-					System.out.println("Body");
-					System.out.println(b1.toString());
-
 					this.root = CFGExceptionalUnitGraphAction.getCFG(b1);
-					System.out.println("root = " + this.root.getLabel());
+					return new Object[] { this.root };
 				}
 
 				return getChildren(root);
@@ -99,22 +97,23 @@ public class CFGView extends AbstractView {
 		}
 
 		public Object getParent(Object child) {
-			if (child instanceof CFG) {
+			if (child instanceof Graph) {
 				return ((CFG) child).getParent();
 			}
 			return null;
 		}
 
 		public Object[] getChildren(Object parent) {
-			if (parent instanceof CFG) {
+			if (parent instanceof Graph) {
 				return ((CFG) parent).getConnections().toArray();
 			}
 			return new Object[0];
 		}
 
 		public boolean hasChildren(Object parent) {
-			if (parent instanceof CFG)
+			if (parent instanceof Graph) {
 				return !((CFG) parent).isSink();
+			}
 			return false;
 		}
 
@@ -135,7 +134,7 @@ public class CFGView extends AbstractView {
 
 		public Image getImage(Object obj) {
 			String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-			if (obj instanceof CFG) {
+			if (obj instanceof Graph) {
 				CFG cfg = (CFG) obj;
 				if (!cfg.isSink()) {
 					imageKey = ISharedImages.IMG_OBJ_FOLDER;

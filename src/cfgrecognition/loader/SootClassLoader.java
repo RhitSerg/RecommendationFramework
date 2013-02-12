@@ -64,7 +64,7 @@ import soot.options.Options;
  *         (rupakhcr@clarkson.edu)
  */
 public class SootClassLoader {
-	private final static String DUMMY_MAIN_CLASS = "serl.dummy.Main";
+	private final static String DUMMY_MAIN_CLASS = "zdummy.Main";
 	private final static String DUMMY_ENTRY_METHOD = "main";
 
 	private static SootClassLoader instance;

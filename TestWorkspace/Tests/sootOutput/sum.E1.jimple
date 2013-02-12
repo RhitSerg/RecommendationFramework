@@ -1,0 +1,74 @@
+public class sum.E1 extends java.lang.Object
+{
+
+    public void source()
+    {
+        sum.E1 this;
+        int sum, i, temp$0, temp$1, temp$2, temp$3;
+
+        this := @this: sum.E1;
+        sum = 0;
+        i = 0;
+
+     label0:
+        nop;
+        if i < 10 goto label1;
+
+        goto label2;
+
+     label1:
+        nop;
+        temp$0 = sum;
+        temp$1 = temp$0 + 1;
+        sum = temp$1;
+        nop;
+        temp$2 = i;
+        temp$3 = temp$2 + 1;
+        i = temp$3;
+        goto label0;
+
+     label2:
+        nop;
+        return;
+    }
+
+    public void target()
+    {
+        sum.E1 this;
+        int sum, i, temp$0, temp$1, temp$2, temp$3;
+
+        this := @this: sum.E1;
+        sum = 0;
+        i = 0;
+
+     label0:
+        nop;
+        if i < 10 goto label1;
+
+        goto label2;
+
+     label1:
+        nop;
+        temp$0 = sum;
+        temp$1 = temp$0 + 1;
+        sum = temp$1;
+        nop;
+        temp$2 = i;
+        temp$3 = temp$2 + 1;
+        i = temp$3;
+        goto label0;
+
+     label2:
+        nop;
+        return;
+    }
+
+    public void <init>()
+    {
+        sum.E1 this;
+
+        this := @this: sum.E1;
+        specialinvoke this.<java.lang.Object: void <init>()>();
+        return;
+    }
+}
