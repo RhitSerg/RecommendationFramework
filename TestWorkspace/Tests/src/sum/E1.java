@@ -1,75 +1,19 @@
 package sum;
 
 public class E1 {
-
-	public void mySort() {
-		int[] num = new int[10];
-		int j;
-		boolean flag = true;
-		int temp;
-		int a = 0;
-		int b = 0;
-		int c = 0;
-		int d = 0;
-
-		while (flag) {
-			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
-					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
-					flag = true;
-				}
-			}
-		}
-		while (flag) {
-			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
-					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
-					flag = true;
-				}
-			}
+	public void source() {
+		int sum = 0;
+		for (int i = 0; i < 10; i--) {
+			sum = sum + 1;
 		}
 	}
-
-	public void bubbleSort() {
-		int[] num = new int[10];
-		int j;
-		boolean flag = true;
-		int temp;
-		int a = 0;
-		int b = 0;
-		int c = 0;
-		int d = 0;
-
-		while (flag) {
-			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
-					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
-					flag = true;
-				}
-			}
-		}
-		while (flag) {
-			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
-					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
-					flag = true;
-				}
-			}
+	
+	public void target() {
+		int sum = 0;
+		for (int i = 0; i < 10; i++) {
+			sum = sum + 1;
 		}
 	}
-
 }
 /*
  * Actual differences: (R) 6: '--' operator

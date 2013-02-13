@@ -1,6 +1,6 @@
 package cfgrecognition.actions;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,16 +13,15 @@ import org.eclipse.ui.PlatformUI;
 import pqgram.PQGram;
 import pqgram.PQGramDifferenceFinder;
 import soot.Body;
-import soot.PatchingChain;
-import soot.Unit;
-import soot.UnitBox;
-import soot.jimple.Stmt;
+import soot.SootClass;
+import soot.SootMethod;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import astrecognition.Activator;
 import astrecognition.Settings;
 import astrecognition.views.AbstractView;
 import cfgrecognition.loader.SootClassLoader;
 import cfgrecognition.model.CFG;
+import cfgrecognition.util.Util;
 import cfgrecognition.views.ProjectNameDialog;
 
 /**
@@ -38,6 +37,20 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 		this.setToolTipText(DISTANCE_TOOLTIP);
 		this.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+	}
+	
+	private static SootClass getExceptionalUnitGraph(String className) {
+		SootClassLoader loader = SootClassLoader.instance();
+		return loader.getSootClass(className);
+	}
+	
+	public static List<ExceptionalUnitGraph> getMethodExceptionalUnitGraphs(String className) {
+		SootClass sootClass = getExceptionalUnitGraph(className);
+		List<ExceptionalUnitGraph> methodExceptionalUnitGraphs = new ArrayList<ExceptionalUnitGraph>();
+		for (SootMethod sootMethod : sootClass.getMethods()) {
+			methodExceptionalUnitGraphs.add(Util.getUnitGraph(sootMethod));
+		}
+		return methodExceptionalUnitGraphs;
 	}
 
 	@Override

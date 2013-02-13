@@ -20,7 +20,7 @@ public abstract class PQGramAction extends Action {
 	}
 	
 	private Tree getTypeDeclarationTree(Tree workspaceTree) {
-		return workspaceTree.getChildren().get(0).getChildren().get(0).getChildren().get(3);
+		return workspaceTree.getChildren().get(0).getChildren().get(3);
 	}
 	
 	protected Tree getSourceMethodBody(Tree workspaceTree) {

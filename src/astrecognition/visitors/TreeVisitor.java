@@ -14,7 +14,7 @@ import fromastview.NodeLabel;
  * Build labeled, ordered trees from AST while visiting
  */
 public class TreeVisitor extends GeneralVisitor {
-	private static String ROOT_LABEL = "Project";
+	private static String ROOT_LABEL = "Package";
 	
 	private Tree root;
 	protected Map<ASTNode, Tree> nodes;
@@ -28,7 +28,18 @@ public class TreeVisitor extends GeneralVisitor {
 	}
 	
 	public Tree getRoot() {
+		if (this.root.getChildren().size() == 1)
+			return this.root.getChildren().get(0);
 		return this.root;
+	}
+	
+	@Override
+	public void endVisit(CompilationUnit node) {
+		Tree cuNode = this.nodes.get(node);
+		String name = cuNode.getChildren().get(0).getLabel();
+		name = name.substring(name.indexOf(':')+2);
+		this.nodes.get(node).setOriginalLabel(name);
+		super.endVisit(node);
 	}
 
 	protected void generalVisit(ASTNode node) {
@@ -37,10 +48,6 @@ public class TreeVisitor extends GeneralVisitor {
 		current.setEndPosition(node.getStartPosition() + node.getLength());
 		this.addToTree(node, current);
 		addAttributeChildren(node, current);
-	}
-	
-	protected void generalEndVisit(ASTNode node) {
-		// LABEL UNIQUENESS DONE IN PQ-GRAM, nothing left here right now
 	}
 	
 	@Override
@@ -84,12 +91,6 @@ public class TreeVisitor extends GeneralVisitor {
 				treeNode.addChild(newTreeNode);
 			}
 		}
-	}
-	
-	@Override
-	public boolean visit(MethodDeclaration node) {
-		// LABEL UNIQUENESS DONE IN PQ-GRAM, nothing left here right now
-		return super.visit(node);
 	}
 
 }
