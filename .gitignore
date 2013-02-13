@@ -5,4 +5,4 @@
 *.war
 *.ear
 
-TestWorkspace/.metadata/
+.metadata/
