@@ -35,11 +35,9 @@ public class PQGram {
 	private static Profile getLabelTuples(int p, int q, Profile profile,
 			Graph a, Graph[] stem, HashSet<Graph> visited) {
 		if (visited.contains(a)) {
-			System.out.println("Revisiting " + a.getUniqueLabel());
 			return profile;
 		}
 
-		System.out.println("Adding " + a.getUniqueLabel());
 		visited.add(a);
 
 		Graph[] base = new Graph[q];
