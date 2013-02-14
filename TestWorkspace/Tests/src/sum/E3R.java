@@ -1,6 +1,6 @@
 package sum;
 
-public class E2 {
+public class E3R {
 	public void source() {
 		int sum = 0;
 		for (int i = 0; i >= 10; i++) {

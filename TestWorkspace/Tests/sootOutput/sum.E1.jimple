@@ -23,7 +23,7 @@ public class sum.E1 extends java.lang.Object
         sum = temp$1;
         nop;
         temp$2 = i;
-        temp$3 = temp$2 + 1;
+        temp$3 = temp$2 + -1;
         i = temp$3;
         goto label0;
 
