@@ -57,11 +57,14 @@ public class PQGramTestAction extends PQGramAction {
 					message += String.format("%s\n", edit);
 				}
 				message += "\n";
-				/*List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className);
+				
+				System.out.println("AST Project NAME: " + javaProject.getElementName());
+				
+				List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className);
 				CFG sourceCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(1).getBody());
 				CFG targetCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(2).getBody());
 				double cfgDistance = PQGram.getDistance(sourceCFG, targetCFG, Settings.P, Settings.Q);
-				message += String.format("%d,%d-Gram CFG distance: %f\n\n", Settings.P, Settings.Q, cfgDistance);*/
+				message += String.format("%d,%d-Gram CFG distance: %f\n\n", Settings.P, Settings.Q, cfgDistance);
 			} catch (IndexOutOfBoundsException e) {
 				title = "Test error";
 				message = "ASTs not formatted as expected";

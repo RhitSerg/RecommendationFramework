@@ -1,6 +1,7 @@
 package cfgrecognition.actions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -38,23 +39,8 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 		this.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 	}
-	
-	private static SootClass getExceptionalUnitGraph(String className) {
-		SootClassLoader loader = SootClassLoader.instance();
-		return loader.getSootClass(className);
-	}
-	
-	public static List<ExceptionalUnitGraph> getMethodExceptionalUnitGraphs(String className) {
-		SootClass sootClass = getExceptionalUnitGraph(className);
-		List<ExceptionalUnitGraph> methodExceptionalUnitGraphs = new ArrayList<ExceptionalUnitGraph>();
-		for (SootMethod sootMethod : sootClass.getMethods()) {
-			methodExceptionalUnitGraphs.add(Util.getUnitGraph(sootMethod));
-		}
-		return methodExceptionalUnitGraphs;
-	}
 
-	@Override
-	public void run() {
+	private static void instantiateProject() {
 		IJavaProject project = null;
 		try {
 			ProjectNameDialog dialog = new ProjectNameDialog(Display
@@ -65,13 +51,41 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 		}
 
 		if (project == null) {
-			this.parentView.showMessage(Activator.PLUGIN_ID,
-					"JavaProject cannot be selected.");
+			// this.parentView.showMessage(Activator.PLUGIN_ID,
+			// "JavaProject cannot be selected.");
 			return;
 		}
 
 		SootClassLoader.reset();
 		Activator.setIJavaProject(project);
+	}
+
+	private static SootClass getExceptionalUnitGraph(String className) {
+		instantiateProject();
+		SootClassLoader loader = SootClassLoader.instance();
+
+		try {
+			loader.process();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loader.getSootClass(className);
+	}
+
+	public static List<ExceptionalUnitGraph> getMethodExceptionalUnitGraphs(
+			String className) {
+
+		SootClass sootClass = getExceptionalUnitGraph(className);
+		List<ExceptionalUnitGraph> methodExceptionalUnitGraphs = new ArrayList<ExceptionalUnitGraph>();
+		for (SootMethod sootMethod : sootClass.getMethods()) {
+			methodExceptionalUnitGraphs.add(Util.getUnitGraph(sootMethod));
+		}
+		return methodExceptionalUnitGraphs;
+	}
+
+	@Override
+	public void run() {
+		instantiateProject();
 
 		List<ExceptionalUnitGraph> graphs = getExceptionalUnitGraphs();
 

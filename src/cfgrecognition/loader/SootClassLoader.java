@@ -88,7 +88,7 @@ public class SootClassLoader {
 	}
 
 	private Map<String, SootClass> nameToClassMap;
-
+	
 	private SootClassLoader() {
 		nameToClassMap = Collections
 				.synchronizedMap(new HashMap<String, SootClass>());
@@ -164,6 +164,11 @@ public class SootClassLoader {
 	 * @return
 	 */
 	public SootClass getSootClass(String name) {
+		System.out.println("KEYS in Sootclass:");
+		for(String s: this.nameToClassMap.keySet()) {
+			System.out.println(s);
+		}
+		
 		return this.nameToClassMap.get(name);
 	}
 
