@@ -38,9 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -48,12 +46,12 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
-import astrecognition.*;
 
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.options.Options;
+import astrecognition.Activator;
 
 /**
  * This class uses JDT API to traverse through all of the project types
@@ -142,7 +140,6 @@ public class SootClassLoader {
 	// Load class here returns null so we might expect a null pointer exception
 	// somewhere
 	private synchronized SootClass load(String name, boolean main) {
-
 		try {
 			SootClass c = Scene.v().loadClassAndSupport(name);
 			c.setApplicationClass();
@@ -164,11 +161,6 @@ public class SootClassLoader {
 	 * @return
 	 */
 	public SootClass getSootClass(String name) {
-		System.out.println("KEYS in Sootclass:");
-		for(String s: this.nameToClassMap.keySet()) {
-			System.out.println(s);
-		}
-		
 		return this.nameToClassMap.get(name);
 	}
 

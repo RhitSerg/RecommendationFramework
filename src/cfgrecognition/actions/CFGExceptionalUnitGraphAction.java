@@ -1,7 +1,6 @@
 package cfgrecognition.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -63,7 +62,6 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 	private static SootClass getExceptionalUnitGraph(String className) {
 		instantiateProject();
 		SootClassLoader loader = SootClassLoader.instance();
-
 		try {
 			loader.process();
 		} catch (Exception e) {
@@ -74,7 +72,6 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 
 	public static List<ExceptionalUnitGraph> getMethodExceptionalUnitGraphs(
 			String className) {
-
 		SootClass sootClass = getExceptionalUnitGraph(className);
 		List<ExceptionalUnitGraph> methodExceptionalUnitGraphs = new ArrayList<ExceptionalUnitGraph>();
 		for (SootMethod sootMethod : sootClass.getMethods()) {

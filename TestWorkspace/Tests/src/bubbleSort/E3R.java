@@ -1,7 +1,6 @@
 package bubbleSort;
 
-public class E0 {
-	/*None*/
+public class E3R {
 	public void source() {
 		int[] num = new int[10];
 		int j;
@@ -9,18 +8,20 @@ public class E0 {
 		int temp;
 
 		while (flag) {
-			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
+			flag = true;
+			j = 1;
+			while (j < num.length - 2) {
+				if (num[j] < num[j+1]) {
 					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
+					num[j] = num[j+1];
+					num[j+1] = temp;
 					flag = true;
 				}
+				j++;
 			}
 		}
 	}
-
+	
 	public void target() {
 		int[] num = new int[10];
 		int j;
@@ -30,7 +31,8 @@ public class E0 {
 		while (flag) {
 			flag = false;
 			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1]) {
+				if (num[j] < num[j + 1])
+				{
 					temp = num[j];
 					num[j] = num[j + 1];
 					num[j + 1] = temp;
@@ -40,3 +42,14 @@ public class E0 {
 		}
 	}
 }
+/*
+ * Actual differences: (R) 11: 'true' token
+ * 						   12: '1' token
+ * 						   13: '2' token
+ * 
+ * Expected difference score: ???
+ * 
+ * Expected recommended edits: 11: 'true' -> 'false'
+ * 							   12: '1' -> '0'
+ * 							   13: '2' -> '1'
+ */

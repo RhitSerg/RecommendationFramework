@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import astrecognition.model.Graph;
 import astrecognition.model.Tree;
-import cfgrecognition.model.CFG;
 
 /**
  * Computes pq-Gram distance (adapted from

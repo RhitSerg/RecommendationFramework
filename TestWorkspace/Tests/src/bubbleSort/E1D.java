@@ -1,28 +1,30 @@
 package bubbleSort;
 
-public class E1 {
-
-	public void source(int[] num) {
-
+public class E1D {
+	public void source() {
+		int[] num = new int[10];
 		int j;
 		boolean flag = true;
 		int temp;
 
 		while (flag) {
 			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
-				if (num[j] < num[j + 1])
-				{
+			j = 0;
+			while (j < num.length - 1) {
+				flag = false;
+				if (num[j] < num[j+1]) {
 					temp = num[j];
-					num[j] = num[j + 1];
-					num[j + 1] = temp;
+					num[j] = num[j+1];
+					num[j+1] = temp;
 					flag = true;
 				}
+				j++;
 			}
 		}
 	}
-
+	
 	public void target() {
+		int[] num = new int[10];
 		int j;
 		boolean flag = true;
 		int temp;
@@ -41,11 +43,10 @@ public class E1 {
 		}
 	}
 }
-
 /*
- * Actual differences: 
+ * Actual differences: (D) 14: assignment flag = false extra
  * 
- * Expected difference score: 
+ * Expected difference score: ???
  * 
- * Expected recommended edits:
+ * Expected recommended edits: 14: Delete unnecessary code
  */
