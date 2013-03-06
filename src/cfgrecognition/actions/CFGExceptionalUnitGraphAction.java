@@ -39,7 +39,7 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 	}
 
-	private static void instantiateProject() {
+	public static void instantiateProject() {
 		IJavaProject project = null;
 		try {
 			ProjectNameDialog dialog = new ProjectNameDialog(Display
@@ -59,6 +59,15 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 		Activator.setIJavaProject(project);
 	}
 
+	private static SootClass getExceptionalUnitGraph(String className, SootClassLoader loader) {
+		try {
+			loader.process();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loader.getSootClass(className);
+	}
+
 	private static SootClass getExceptionalUnitGraph(String className) {
 		instantiateProject();
 		SootClassLoader loader = SootClassLoader.instance();
@@ -71,8 +80,8 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 	}
 
 	public static List<ExceptionalUnitGraph> getMethodExceptionalUnitGraphs(
-			String className) {
-		SootClass sootClass = getExceptionalUnitGraph(className);
+			String className, SootClassLoader loader) {
+		SootClass sootClass = getExceptionalUnitGraph(className, loader);
 		List<ExceptionalUnitGraph> methodExceptionalUnitGraphs = new ArrayList<ExceptionalUnitGraph>();
 		for (SootMethod sootMethod : sootClass.getMethods()) {
 			methodExceptionalUnitGraphs.add(Util.getUnitGraph(sootMethod));
