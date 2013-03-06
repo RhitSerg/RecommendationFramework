@@ -84,6 +84,7 @@ public class CFGExceptionalUnitGraphAction extends CFGAction {
 	public void run() {
 		instantiateProject();
 
+		// TODO: This is where zdummy gets defined and used.
 		List<ExceptionalUnitGraph> graphs = getExceptionalUnitGraphs();
 
 		String message = "Amount of graphs = " + graphs.size() + "\n";
