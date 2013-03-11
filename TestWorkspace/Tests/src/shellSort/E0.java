@@ -1,3 +1,5 @@
+package shellSort;
+
 public class E0 {
 
 	public static <T extends Comparable<? super T>> void source(T[] array) {

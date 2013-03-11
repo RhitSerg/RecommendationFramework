@@ -1,21 +1,22 @@
+package sequentialSearch;
+
 public class E0 {
 	public void source(int[] a, int b) {
 	    for (int i : a) {
 	        if (i==b){
-	          return true;
+	          return;
 	        }
 	      }
-	      return false; 
-	    }
+	      return; 
+    }
 
-	public void source(int[] a, int b) {
+	public void target(int[] a, int b) {
 	    for (int i : a) {
 	        if (i==b){
-	          return true;
+	          return;
 	        }
 	      }
-	      return false; 
-	    }
+	      return;
 	}
 }
 /*

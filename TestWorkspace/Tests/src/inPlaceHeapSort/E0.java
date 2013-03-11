@@ -1,3 +1,5 @@
+package inPlaceHeapSort;
+
 public class E0 {
 	public static void source(int[] array) {
 		/*

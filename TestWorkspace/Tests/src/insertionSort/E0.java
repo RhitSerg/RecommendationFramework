@@ -1,3 +1,5 @@
+package insertionSort;
+
 public class E0 {
 	public static void source(int[] numbers) {
 		for (int i = 0; i < numbers.length; i++) {

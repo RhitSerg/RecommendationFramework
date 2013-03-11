@@ -1,3 +1,9 @@
+package EdmondsKarp;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class E0 {
 
 	public static int source(int[][] E, int[][] C, int s, int t) {

@@ -1,3 +1,5 @@
+package longestCommonSubstring;
+
 public class E0 {
 
 	public static int source(String first, String second) {

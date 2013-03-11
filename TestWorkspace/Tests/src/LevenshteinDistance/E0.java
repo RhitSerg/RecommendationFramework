@@ -1,3 +1,5 @@
+package LevenshteinDistance;
+
 public class E0 {
 
 	public static int source(CharSequence str1, CharSequence str2) {

@@ -52,9 +52,28 @@ public class SimplifierVisitor extends TreeVisitor {
 		int blockAfterAssignmentRemovedPositioned = 2;
 		int varDeclarationPosition = 0;
 		Tree nodeTree = this.nodes.get(node);
+		for (int i = 0; i < nodeTree.getChildren().size(); i++) {
+			if (nodeTree.getChildren().get(i).getLabel().contains("Assignment")) {
+				assignmentPosition = i;
+				break;
+			}
+		}
 		Tree assignmentTree = nodeTree.getChildren().get(assignmentPosition);
+		System.out.println("Node tree: " + nodeTree.getLabel() + ", size: " + nodeTree.getChildren().size());
 		nodeTree.deleteChild(assignmentPosition);
+		for (int i = 0; i < nodeTree.getChildren().size(); i++) {
+			if (nodeTree.getChildren().get(i).getLabel().contains("Block")) {
+				blockAfterAssignmentRemovedPositioned = i;
+				System.out.println("block position: " + blockAfterAssignmentRemovedPositioned);
+			}
+		}
+		System.out.println("Node tree: " + nodeTree.getLabel() + ", size: " + nodeTree.getChildren().size());
 		nodeTree.getChildren().get(blockAfterAssignmentRemovedPositioned).addChild(assignmentTree);
+		for (int i = 0; i < nodeTree.getChildren().size(); i++) {
+			if (nodeTree.getChildren().get(i).getLabel().contains("VariableDeclaration")) {
+				varDeclarationPosition = i;
+			}
+		}
 		Tree varDeclarationTree = nodeTree.getChildren().get(varDeclarationPosition);
 		int nodeTreePosition = nodeTree.getParent().getChildren().indexOf(nodeTree);
 		nodeTree.getParent().getChildren().add(nodeTreePosition, varDeclarationTree);

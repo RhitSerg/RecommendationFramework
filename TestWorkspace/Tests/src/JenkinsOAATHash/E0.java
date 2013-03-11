@@ -1,3 +1,5 @@
+package JenkinsOAATHash;
+
 public class E0 {
 
 	int source(byte[] key) {

@@ -1,8 +1,7 @@
 package mean;
 
 public class E0 {
-	public void source() {
-		int[] nums = new int[10];
+	public void source(int[] nums) {
 		int mean = 0;
 		int i = 0;
 		while (i < nums.length) {

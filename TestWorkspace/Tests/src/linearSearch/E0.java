@@ -1,3 +1,5 @@
+package linearSearch;
+
 public class E0 {
 	public int source(int[] values, int target) {
 		for (int i = 0; i < values.length; ++i) {

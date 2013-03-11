@@ -1,3 +1,5 @@
+package cocktailSort;
+
 public class E0 {
 	public static int[] source(int[] numbers) {
 		boolean swapped = true;

@@ -88,13 +88,14 @@ public class PQGramTestAction extends PQGramAction {
 			for (Tree classTree : classes) {
 				try {
 					String className = classTree.getLabel();
-					System.out.println();
+					if (className.contains(Settings.DUMMY_NAME))
+						continue;
 					className = className.substring(0, className.length()-5);
-					Tree typeDeclarationTree = classTree.getChildren().get(3).makeLabelsUnique(new HashMap<String, Integer>());
+					Tree typeDeclarationTree = classTree.getChildren().get(classTree.getChildren().size()-1).makeLabelsUnique(new HashMap<String, Integer>());
 					Tree sourceMethodTree = typeDeclarationTree.getChildren().get(6)
-							.getChildren().get(6);
+							.getChildren().get(typeDeclarationTree.getChildren().get(6).getChildren().size()-1);
 					Tree targetMethodTree = typeDeclarationTree.getChildren().get(7)
-							.getChildren().get(6);
+							.getChildren().get(typeDeclarationTree.getChildren().get(7).getChildren().size()-1);
 					double distance = PQGram.getDistance(sourceMethodTree,
 							targetMethodTree, Settings.P, Settings.Q);
 					List<Edit> edits = PQGramRecommendation.getEdits(

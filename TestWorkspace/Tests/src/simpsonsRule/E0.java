@@ -1,3 +1,5 @@
+package simpsonsRule;
+
 public class E0 {
 
 	public static double source(double a, double b) {

@@ -1,3 +1,5 @@
+package quickSort;
+
 import java.util.ArrayList;
 
 public class E0 {
@@ -17,10 +19,10 @@ public class E0 {
 			else
 				sameAsPivot++;
 		}
-		lesser = quicksort(lesser);
+		lesser = source(lesser);
 		for (int i = 0; i < sameAsPivot; i++)
 			lesser.add(numbers.get(pivot));
-		greater = quicksort(greater);
+		greater = source(greater);
 		ArrayList<Integer> sorted = new ArrayList<Integer>();
 		for (int number : lesser)
 			sorted.add(number);
@@ -44,10 +46,10 @@ public class E0 {
 			else
 				sameAsPivot++;
 		}
-		lesser = quicksort(lesser);
+		lesser = target(lesser);
 		for (int i = 0; i < sameAsPivot; i++)
 			lesser.add(numbers.get(pivot));
-		greater = quicksort(greater);
+		greater = target(greater);
 		ArrayList<Integer> sorted = new ArrayList<Integer>();
 		for (int number : lesser)
 			sorted.add(number);

@@ -1,3 +1,5 @@
+package selectionSort;
+
 public class E0 {
 	public void source(int[] x) {
 		for (int i = 0; i < x.length - 1; i++) {

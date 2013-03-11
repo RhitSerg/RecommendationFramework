@@ -1,3 +1,5 @@
+package combSort;
+
 public class E0 {
 	private static void source(int a[]) {
 		int gap = a.length;

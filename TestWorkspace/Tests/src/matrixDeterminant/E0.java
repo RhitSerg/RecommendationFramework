@@ -1,3 +1,5 @@
+package matrixDeterminant;
+
 public class E0 {
 
 	public static double source(int NMAX, double[][] x) {
@@ -38,9 +40,9 @@ public class E0 {
 			} // end outer loop
 
 			if (h % 2 == 0)
-				ret -= det(NMAX - 1, y) * x[h][0];
+				ret -= source(NMAX - 1, y) * x[h][0];
 			if (h % 2 == 1)
-				ret += det(NMAX - 1, y) * x[h][0];
+				ret += source(NMAX - 1, y) * x[h][0];
 		} // end loop
 		return ret;
 	} // end method
@@ -83,9 +85,9 @@ public class E0 {
 			} // end outer loop
 
 			if (h % 2 == 0)
-				ret -= det(NMAX - 1, y) * x[h][0];
+				ret -= target(NMAX - 1, y) * x[h][0];
 			if (h % 2 == 1)
-				ret += det(NMAX - 1, y) * x[h][0];
+				ret += target(NMAX - 1, y) * x[h][0];
 		} // end loop
 		return ret;
 	} // end method

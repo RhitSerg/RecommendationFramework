@@ -1,3 +1,5 @@
+package mergeSort;
+
 public class E0 {
 	public int[] source(int array[])
 	// pre: array is full, all elements are valid integers (not null)
@@ -31,8 +33,8 @@ public class E0 {
 			// note: when mergeSort returns, arr1 and arr2 will both be sorted!
 			// it's not magic, the merging is done below, that's how mergesort
 			// works :)
-			arr1 = mergeSort(arr1);
-			arr2 = mergeSort(arr2);
+			arr1 = source(arr1);
+			arr2 = source(arr2);
 
 			// the three variables below are indexes that we'll need for merging
 			// [i] stores the index of the main array. it will be used to let us
@@ -127,8 +129,8 @@ public class E0 {
 			// note: when mergeSort returns, arr1 and arr2 will both be sorted!
 			// it's not magic, the merging is done below, that's how mergesort
 			// works :)
-			arr1 = mergeSort(arr1);
-			arr2 = mergeSort(arr2);
+			arr1 = target(arr1);
+			arr2 = target(arr2);
 
 			// the three variables below are indexes that we'll need for merging
 			// [i] stores the index of the main array. it will be used to let us

@@ -1,3 +1,4 @@
+package countingSort;
 import java.util.Arrays;
 
 public class E0 {
@@ -20,7 +21,8 @@ public class E0 {
 		}
 	}
 
-	public static void target(int[] a, int low, int high) {
+	public static void target(int[] a, int low) {
+		int high = 1;
 		int[] counts = new int[high - low + 1]; // this will hold all possible
 												// values, from low to high
 		for (int x : a)
