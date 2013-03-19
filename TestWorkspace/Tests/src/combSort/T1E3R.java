@@ -1,7 +1,7 @@
 package combSort;
 
-public class E0 {
-	private static void source(int a[]) {
+public class T1E3R {
+	public static void source(int a[]) {
 		int gap = a.length;
 		boolean swapped;
 		do {
@@ -12,18 +12,18 @@ public class E0 {
 				gap = 11;
 			if (gap < 1)
 				gap = 1;
-			for (int i = 0; i < (a.length - gap); i++) {
+			for (int i = 0; i < (a.length - gap); i--) {
 				if (a[i] > a[i + gap]) {
-					swapped = true;
+					swapped = false;
 					int temp = a[i];
 					a[i] = a[i + gap];
 					a[i + gap] = temp;
 				}
 			}
-		} while (gap > 1 || swapped);
+		} while (gap > 1 && swapped);
 	}
 
-	private static void target(int a[]) {
+	public static void target(int a[]) {
 		int gap = a.length;
 		boolean swapped;
 		do {
