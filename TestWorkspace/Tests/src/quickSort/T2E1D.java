@@ -2,7 +2,7 @@ package quickSort;
 
 import java.util.ArrayList;
 
-public class E0 {
+public class T2E1D {
 
 	public static ArrayList<Integer> source(ArrayList<Integer> numbers) {
 		if (numbers.size() <= 1)
@@ -14,12 +14,13 @@ public class E0 {
 		for (int number : numbers) {
 			if (number > numbers.get(pivot))
 				greater.add(number);
-			else if (number < numbers.get(pivot))
+			else if (number < numbers.get(pivot)){
 				lesser.add(number);
+				return greater;
+			}
 			else
 				sameAsPivot++;
 		}
-		return greater;
 		lesser = source(lesser);
 		for (int i = 0; i < sameAsPivot; i++)
 			lesser.add(numbers.get(pivot));

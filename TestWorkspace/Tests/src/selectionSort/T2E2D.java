@@ -1,6 +1,6 @@
 package selectionSort;
 
-public class E0 {
+public class T2E2D {
 	public void source(int[] x) {
 		for (int i = 0; i < x.length - 1; i++) {
 			int j = i + 1;
@@ -11,7 +11,7 @@ public class E0 {
 					x[i] = x[j];
 					x[i]++;
 					x[j] = temp;
-					j++
+					j++;
 				}
 				j++;
 			}

@@ -1,6 +1,6 @@
 package radixSort;
 
-public class E0 {
+public class T2E2I {
 	public void source(int[] a) {
 		// our helper array
 		int[] t = new int[a.length];
@@ -15,6 +15,7 @@ public class E0 {
 		// counting and prefix arrays
 		// (note dimensions 2^r which is the number of all possible values of a
 		// r-bit number)
+		int[] count=new int[10];
 		int[] pref = new int[1 << r];
 
 		// number of groups

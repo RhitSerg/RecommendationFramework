@@ -1,6 +1,6 @@
 package radixSort;
 
-public class E0 {
+public class T3E1D1R {
 	public void source(int[] a) {
 		// our helper array
 		int[] t = new int[a.length];
@@ -27,9 +27,10 @@ public class E0 {
 		// the algorithm:
 		for (int c = 0, shift = 0; c < groups; c++, shift += r) {
 			// reset count array
-			for (int j = 0; j < count.length; j++)
+			for (int j = 0; j < count.length; j++) {
 				mask++;
 				count[j] = 0;
+			}
 
 			// counting elements of the c-th group
 			for (int i = 0; i < a.length; i++)

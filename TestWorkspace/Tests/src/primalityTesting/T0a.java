@@ -2,7 +2,7 @@ package primalityTesting;
 
 import java.math.BigInteger;
 
-public class E0 {
+public class T0a {
 	public static boolean source(BigInteger n, int numValues) {
 		int[] aValues = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41 };
 

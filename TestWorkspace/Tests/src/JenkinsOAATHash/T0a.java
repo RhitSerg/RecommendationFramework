@@ -1,6 +1,6 @@
 package JenkinsOAATHash;
 
-public class E0 {
+public class T0a {
 
 	int source(byte[] key) {
 		int hash = 0;

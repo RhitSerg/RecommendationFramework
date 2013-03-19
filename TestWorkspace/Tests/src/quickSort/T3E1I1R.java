@@ -2,7 +2,7 @@ package quickSort;
 
 import java.util.ArrayList;
 
-public class E0 {
+public class T3E1I1R {
 
 	public static ArrayList<Integer> source(ArrayList<Integer> numbers) {
 		if (numbers.size() <= 1)

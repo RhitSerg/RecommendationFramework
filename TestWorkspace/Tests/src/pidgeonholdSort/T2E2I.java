@@ -1,10 +1,10 @@
 package pidgeonholdSort;
 
-public class E0 {
+public class T2E2I {
 	public static void source(int[] a) {
 		// size of range of values in the list (ie, number of pigeonholes we
 		// need)
-		int min = a[0];
+		int min = a[0], max = a[0];
 		for (int x : a) {
 			min = Math.min(x, min);
 		}
@@ -20,8 +20,7 @@ public class E0 {
 		// Put the elements back into the array in order.
 		int i = 0;
 		for (int count = 0; count < size; count++)
-			while (holes[count]-- > 0)
-				a[i++] = count + min;
+			while (holes[count]-- > 0){}
 	}
 	
 	public static void target(int[] a) {

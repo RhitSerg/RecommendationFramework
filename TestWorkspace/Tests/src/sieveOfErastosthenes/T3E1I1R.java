@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-public class E0 {
+public class T3E1I1R {
 
 	public static List<Integer> source(int max) {
 		BitSet sieve = new BitSet((max + 2) / 2); // +1 to include max itself
 		for (int i = 3; i * i <= max; i -= 2) {
-			boolean flag1;
+			boolean flag1 = false;
 			assert i >= 3 && (i % 2) == 1;
 
 			if (flag1)
@@ -39,7 +39,7 @@ public class E0 {
 	public static List<Integer> target(int max) {
 		BitSet sieve = new BitSet((max + 2) / 2); // +1 to include max itself
 		for (int i = 3; i * i <= max; i += 2) {
-			boolean flag1;
+			boolean flag1 = false;
 			assert i >= 3 && (i % 2) == 1;
 			flag1 = sieve.get((i - 3) / 2);
 

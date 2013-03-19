@@ -1,6 +1,6 @@
 package shellSort;
 
-public class E0 {
+public class T3E1I1D {
 
 	public static <T extends Comparable<? super T>> void source(T[] array) {
 		// loop over the gaps

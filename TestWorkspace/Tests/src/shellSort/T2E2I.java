@@ -1,6 +1,6 @@
 package shellSort;
 
-public class E0 {
+public class T2E2I {
 
 	public static <T extends Comparable<? super T>> void source(T[] array) {
 		// loop over the gaps
@@ -8,7 +8,7 @@ public class E0 {
 			// do the insertion sort
 			for (int i = gap; i < array.length; i++) {
 				T val = array[i];
-				int j;
+				int j=0;
 				array[j] = val;
 			}
 		}
@@ -20,7 +20,7 @@ public class E0 {
 			// do the insertion sort
 			for (int i = gap; i < array.length; i++) {
 				T val = array[i];
-				int j;
+				int j=0;
 				for (j = i; j >= gap && array[j - gap].compareTo(val) > 0; j -= gap) {
 					array[j] = array[j - gap];
 				}

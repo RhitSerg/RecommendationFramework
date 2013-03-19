@@ -1,6 +1,6 @@
 package sequentialSearch;
 
-public class E0 {
+public class T3E1I1R {
 	public void source(int[] a, int b) {
 	    for (int i : a) {
 	        if (i==b){

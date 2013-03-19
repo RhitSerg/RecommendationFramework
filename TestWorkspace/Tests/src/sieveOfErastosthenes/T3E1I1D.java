@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-public class E0 {
+public class T3E1I1D {
 
 	public static List<Integer> source(int max) {
 		BitSet sieve = new BitSet((max + 2) / 2); // +1 to include max itself
