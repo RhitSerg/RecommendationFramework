@@ -3,19 +3,14 @@ package naivePrimeGeneration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class E0 {
+public class T1E1R {
 
 	public static List<Integer> source(int max) {
 		List<Integer> primes = new ArrayList<Integer>();
-
-		// start from 2
 		OUTERLOOP: for (int i = 2; i <= max; i++) {
-			// try to divide it by all known primes
 			for (Integer p : primes)
-				if (i % p == 0)
-					continue OUTERLOOP; // i is not prime
-
-			// i is prime
+				if (i / p == 0)
+					continue OUTERLOOP;
 			primes.add(i);
 		}
 		return primes;
@@ -23,15 +18,10 @@ public class E0 {
 
 	public static List<Integer> target(int max) {
 		List<Integer> primes = new ArrayList<Integer>();
-
-		// start from 2
 		OUTERLOOP: for (int i = 2; i <= max; i++) {
-			// try to divide it by all known primes
 			for (Integer p : primes)
 				if (i % p == 0)
-					continue OUTERLOOP; // i is not prime
-
-			// i is prime
+					continue OUTERLOOP;
 			primes.add(i);
 		}
 		return primes;

@@ -1,6 +1,6 @@
 package bubbleSort;
 
-public class E1D {
+public class T2E1D {
 	public void source() {
 		int[] num = new int[10];
 		int j;

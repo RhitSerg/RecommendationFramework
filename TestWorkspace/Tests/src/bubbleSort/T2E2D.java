@@ -1,6 +1,6 @@
 package bubbleSort;
 
-public class E1I {
+public class T2E2D {
 	public void source() {
 		int[] num = new int[10];
 		int j;
@@ -11,10 +11,13 @@ public class E1I {
 			flag = false;
 			j = 0;
 			while (j < num.length - 1) {
+				flag = false;
 				if (num[j] < num[j+1]) {
 					temp = num[j];
 					num[j] = num[j+1];
 					num[j+1] = temp;
+					flag = true;
+					j++;
 				}
 				j++;
 			}
@@ -42,9 +45,11 @@ public class E1I {
 	}
 }
 /*
- * Actual differences: (I) 17-18: assignment flag = true missing
+ * Actual differences: (D) 14: assignment flag = false extra
+ * 					   (D) 20: j++ extra
  * 
  * Expected difference score: ???
  * 
- * Expected recommended edits: 17: Insert assignment statement
+ * Expected recommended edits: 14: Delete unnecessary code
+ * 							   20: Delete unnecessary code
  */

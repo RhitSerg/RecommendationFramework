@@ -1,6 +1,6 @@
 package bubbleSort;
 
-public class E1I1R {
+public class T3E1D1R {
 	public void source() {
 		int[] num = new int[10];
 		int j;
@@ -11,10 +11,12 @@ public class E1I1R {
 			flag = false;
 			j = 0;
 			while (j <= num.length - 1) {
+				flag = false;
 				if (num[j] < num[j+1]) {
 					temp = num[j];
 					num[j] = num[j+1];
 					num[j+1] = temp;
+					flag = true;
 				}
 				j++;
 			}

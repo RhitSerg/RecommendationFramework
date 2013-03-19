@@ -1,6 +1,6 @@
 package cocktailSort;
 
-public class E0 {
+public class T3E1I1R {
 	public static int[] source(int[] numbers) {
 		boolean swapped = true;
 		int i = 0;
@@ -12,13 +12,12 @@ public class E0 {
 					int temp = numbers[k];
 					numbers[k] = numbers[k + 1];
 					numbers[k + 1] = temp;
-					swapped = true;
 				}
 			}
 			j--;
 			if (swapped) {
 				swapped = false;
-				for (int k = j; k > i; k--) {
+				for (int k = j; k > i; k++) {
 					if (numbers[k] < numbers[k - 1]) {
 						int temp = numbers[k];
 						numbers[k] = numbers[k - 1];

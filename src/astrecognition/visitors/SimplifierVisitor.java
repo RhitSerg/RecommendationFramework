@@ -46,7 +46,7 @@ public class SimplifierVisitor extends TreeVisitor {
 		super.endVisit(node);
 	}*/
 
-	@Override
+	/*@Override
 	public void endVisit(ForStatement node) {
 		int assignmentPosition = 2;
 		int blockAfterAssignmentRemovedPositioned = 2;
@@ -59,15 +59,12 @@ public class SimplifierVisitor extends TreeVisitor {
 			}
 		}
 		Tree assignmentTree = nodeTree.getChildren().get(assignmentPosition);
-		System.out.println("Node tree: " + nodeTree.getLabel() + ", size: " + nodeTree.getChildren().size());
 		nodeTree.deleteChild(assignmentPosition);
 		for (int i = 0; i < nodeTree.getChildren().size(); i++) {
 			if (nodeTree.getChildren().get(i).getLabel().contains("Block")) {
 				blockAfterAssignmentRemovedPositioned = i;
-				System.out.println("block position: " + blockAfterAssignmentRemovedPositioned);
 			}
 		}
-		System.out.println("Node tree: " + nodeTree.getLabel() + ", size: " + nodeTree.getChildren().size());
 		nodeTree.getChildren().get(blockAfterAssignmentRemovedPositioned).addChild(assignmentTree);
 		for (int i = 0; i < nodeTree.getChildren().size(); i++) {
 			if (nodeTree.getChildren().get(i).getLabel().contains("VariableDeclaration")) {
@@ -79,7 +76,7 @@ public class SimplifierVisitor extends TreeVisitor {
 		nodeTree.getParent().getChildren().add(nodeTreePosition, varDeclarationTree);
 		nodeTree.deleteChild(varDeclarationPosition);
 		super.endVisit(node);
-	}
+	}*/
 	
 	@Override
 	public void endVisit(VariableDeclarationExpression node) {

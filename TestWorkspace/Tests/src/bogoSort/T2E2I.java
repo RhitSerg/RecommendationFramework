@@ -3,7 +3,7 @@ package bogoSort;
 import java.util.Collections;
 import java.util.List;
 
-public class E0 {
+public class T2E2I {
 
 	public void source(List<Integer> deck) {
 		boolean flag;
@@ -17,11 +17,10 @@ public class E0 {
 		while (!flag) {
 			Collections.shuffle(deck);
 
-			for (int i = 0; i < deck.size() - 1; i++) {
+			for (int i = 0; i < deck.size(); i++) {
 				if (deck.get(i) > deck.get(i + 1))
 					flag = false;
 			}
-			flag = true;
 		}
 	}
 

@@ -1,6 +1,6 @@
 package matrixDeterminant;
 
-public class E0 {
+public class T2E2I {
 
 	public static double source(int NMAX, double[][] x) {
 		double ret = 0;
@@ -10,12 +10,11 @@ public class E0 {
 			for (int i = 0; i < NMAX; i++) {
 				prod1 = 1;
 				prod2 = 1;
-
 				for (int j = 0; j < NMAX; j++) {
 					prod1 *= x[(j + i + 1) % NMAX][j];
 					prod2 *= x[(j + i + 1) % NMAX][NMAX - j - 1];
 				} // end inner loop
-				ret += prod1 - prod2;
+				//ret += prod1 - prod2;
 			} // end outer loop
 			return ret;
 		} // end base case
@@ -34,7 +33,7 @@ public class E0 {
 					if (i == c)
 						continue;
 					y[j][k] = x[a][i];
-					k++;
+					//k++;
 				} // end inner loop
 				j++;
 			} // end outer loop
