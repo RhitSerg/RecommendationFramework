@@ -1,8 +1,9 @@
 package insertionSort;
 
-public class E0 {
+public class T0a {
 	public static void source(int[] numbers) {
-		for (int i = 0; i < numbers.length; i++) {
+		int i = 0;
+		while (i < numbers.length) {
 			int copyNumber = numbers[i];
 			int j = i;
 			while (j > 0 && copyNumber < numbers[j - 1]) {
@@ -10,6 +11,7 @@ public class E0 {
 				j--;
 			}
 			numbers[j] = copyNumber;
+			i++;
 		}
 	}
 

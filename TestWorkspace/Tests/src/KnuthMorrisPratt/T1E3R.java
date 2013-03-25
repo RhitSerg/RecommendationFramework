@@ -1,12 +1,12 @@
 package KnuthMorrisPratt;
 
-public class E0 {
+public class T1E3R {
 	int source(char[] w, char[] s, int[] t) {
 		int m = 0;
 		int i = 0;
-		while (((m + i) < s.length) && (i < w.length)) {
+		while (((m + i) < s.length) || (i < w.length)) {
 			if (s[m + i] == w[i])
-				i++;
+				i--;
 			else {
 				m += i - t[i];
 				if (i > 0)
@@ -14,7 +14,7 @@ public class E0 {
 				i++;
 			}
 		}
-		if (i == w.length)
+		if (i != w.length)
 			return m;
 		else
 			return -1;
