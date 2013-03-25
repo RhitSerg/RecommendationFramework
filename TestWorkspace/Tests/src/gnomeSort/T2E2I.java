@@ -1,15 +1,14 @@
 package gnomeSort;
 
-public class E0 {
+public class T2E2I {
 	static void source(int[] theArray) {
 		for (int index = 1; index < theArray.length;) {
 			if (theArray[index - 1] <= theArray[index]) {
 				++index;
 			} else {
 				int tempVal = theArray[index];
-				theArray[index] = theArray[index - 1];
+				theArray[index] = theArray[index];
 				theArray[index - 1] = tempVal;
-				--index;
 				if (index == 0) {
 					index = 1;
 				}

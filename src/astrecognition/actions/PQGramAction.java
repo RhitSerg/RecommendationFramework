@@ -20,17 +20,20 @@ public abstract class PQGramAction extends Action {
 	}
 	
 	private Tree getTypeDeclarationTree(Tree workspaceTree) {
-		return workspaceTree.getChildren().get(0).getChildren().get(3);
+		return workspaceTree.getChildren().get(15).getChildren().get(3);
 	}
 	
 	protected Tree getSourceMethodBody(Tree workspaceTree) {
 		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
-		return typeDec.getChildren().get(6).getChildren().get(6);
+		return typeDec.getChildren().get(6)
+				.getChildren().get(typeDec.getChildren().get(6).getChildren().size()-1);
 	}
 	
 	protected Tree getFirstTargetMethodBody(Tree workspaceTree) {
 		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
-		return typeDec.getChildren().get(7).getChildren().get(6);
+		System.out.println("Type Dec: " + typeDec.getParent().getLabel());
+		return typeDec.getChildren().get(7)
+				.getChildren().get(typeDec.getChildren().get(7).getChildren().size()-1);
 	}
 	
 	protected List<Tree> getTargetMethods(Tree workspaceTree) {

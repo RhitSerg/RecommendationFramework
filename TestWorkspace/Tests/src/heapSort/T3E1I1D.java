@@ -2,7 +2,7 @@ package heapSort;
 
 import java.util.PriorityQueue;
 
-public class E0 {
+public class T3E1I1D {
 	public static <E extends Comparable<? super E>> void source(E[] array) {
 
 		// Java's PriorityQueue class functions as a min heap
@@ -13,7 +13,7 @@ public class E0 {
 			heap.add(e);
 
 		// Elements come off the heap in ascending order
-		for (int i = 0; i < array.length; i++)
+		for (int i = 0; i < array.length - 1;)
 			array[i] = heap.remove();
 
 	}

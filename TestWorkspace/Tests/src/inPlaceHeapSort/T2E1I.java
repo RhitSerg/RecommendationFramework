@@ -1,6 +1,6 @@
 package inPlaceHeapSort;
 
-public class E0 {
+public class T2E1I {
 	public static void source(int[] array) {
 		/*
 		 * This method performs an in-place heapsort. Starting from the
@@ -23,8 +23,6 @@ public class E0 {
 					int temp = array[n];
 					array[n] = array[p];
 					array[p] = temp;
-
-					n = p; // check parent
 				} else
 					// parent is larger than child
 					break; // all is good in the heap
