@@ -1,6 +1,6 @@
 package longestCommonSubstring;
 
-public class E0 {
+public class T3E1I1D {
 
 	public static int source(String first, String second) {
 		if (first == null || second == null || first.length() == 0
@@ -22,7 +22,7 @@ public class E0 {
 						table[i][j] = table[i - 1][j - 1] + 1;
 					}
 					if (table[i][j] > maxLen) {
-						maxLen = table[i][j];
+						i++;
 					}
 				}
 			}

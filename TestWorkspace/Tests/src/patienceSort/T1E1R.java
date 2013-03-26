@@ -15,7 +15,7 @@ public class E0 {
 			newPile.push(x);
 			// int i = Collections.binarySearch(piles, newPile);
 			int i = 0;
-			if (i < 0)
+			if (i > 0)
 				i = ~i;
 			if (i != piles.size())
 				piles.get(i).push(x);

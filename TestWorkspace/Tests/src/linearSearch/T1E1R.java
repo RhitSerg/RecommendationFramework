@@ -1,13 +1,13 @@
 package linearSearch;
 
-public class E0 {
+public class T1E1R {
 	public int source(int[] values, int target) {
 		for (int i = 0; i < values.length; ++i) {
 			if (values[i] == target) {
 				return i;
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	public int target(int[] values, int target) {

@@ -1,6 +1,6 @@
 package mergeSort;
 
-public class E0 {
+public class T3E1I1R {
 	public int[] source(int array[])
 	// pre: array is full, all elements are valid integers (not null)
 	// post: array is sorted in ascending order (lowest to highest)
@@ -56,10 +56,9 @@ public class E0 {
 					// increase the index of the final array to avoid replacing
 					// the element
 					// which we've just added
-					i++;
 					// increase the index of arr1 to avoid comparing the element
 					// which we've just added
-					j++;
+					j--;
 				}
 				// if the current element of arr2 is less than current element
 				// of arr1
