@@ -64,7 +64,6 @@ public class PQGramRecommendationAction extends PQGramAction implements IPropert
 		int previousEditLine = -1;
 		for (Edit edit : edits) {
 			String translatedEdit = RecommendationTranslator.translate(edit);
-			System.out.println(edit.getLineNumber() + ":" + translatedEdit);
 			if (!translatedEdit.isEmpty() && (!translatedEdit.equals(previousEdit) || edit.getLineNumber() != previousEditLine)) {
 				translatedEdits.add(translatedEdit);
 				IMarker marker;
