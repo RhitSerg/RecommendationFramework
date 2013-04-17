@@ -1,15 +1,13 @@
 package bubbleSort;
 
 public class T2E2D {
-	public void source() {
-		int[] num = new int[10];
-		int j;
+	public void source(int[] num) {
 		boolean flag = true;
 		int temp;
 
 		while (flag) {
 			flag = false;
-			j = 0;
+			int j = 0;
 			while (j < num.length - 1) {
 				flag = false;
 				if (num[j] < num[j+1]) {
@@ -24,15 +22,13 @@ public class T2E2D {
 		}
 	}
 	
-	public void target() {
-		int[] num = new int[10];
-		int j;
+	public void target(int[] num) {
 		boolean flag = true;
 		int temp;
 
 		while (flag) {
 			flag = false;
-			for (j = 0; j < num.length - 1; j++) {
+			for (int j = 0; j < num.length - 1; j++) {
 				if (num[j] < num[j + 1])
 				{
 					temp = num[j];

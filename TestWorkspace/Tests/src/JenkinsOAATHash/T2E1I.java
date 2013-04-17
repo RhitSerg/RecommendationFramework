@@ -11,8 +11,6 @@ public class T2E1I {
 			hash ^= (hash >>> 6);
 		}
 		hash += (hash << 3);
-		hash ^= (hash >>> 11);
-		hash += (hash << 15);
 		return hash;
 	}
 

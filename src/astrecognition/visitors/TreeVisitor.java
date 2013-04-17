@@ -81,7 +81,7 @@ public class TreeVisitor extends GeneralVisitor {
 		treeNode.setLineNumber(lineNumber);
 		for (Object object : NodeLabel.getChildren(astNode)) {
 			String text = NodeLabel.getText(object);
-			if (!text.equals("") && !text.contains("EXPRESSION")){// && !text.contains("variable binding") && !text.contains("IDENTIFIER")) {
+			if (!text.equals("") && !text.contains("EXPRESSION") && !text.contains("variable binding") && !text.contains("IDENTIFIER")) {
 				Tree newTreeNode = new Tree(NodeLabel.getText(object));
 				newTreeNode.setLineNumber(lineNumber);
 				newTreeNode.setStartPosition(astNode.getStartPosition());

@@ -20,8 +20,7 @@ public class T2E2I {
 		}
 	}
 
-	public static void target(int[] a, int low) {
-		int high = 1;
+	public static void target(int[] a, int low, int high) {
 		int[] counts = new int[high - low + 1]; // this will hold all possible
 												// values, from low to high
 		for (int x : a)

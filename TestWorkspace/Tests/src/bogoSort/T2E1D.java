@@ -9,7 +9,6 @@ public class T2E1D {
 		boolean flag;
 
 		for (int i = 0; i < deck.size() - 1; i++) {
-			flag = true;
 			if (deck.get(i) > deck.get(i + 1))
 				flag = false;
 		}
@@ -21,6 +20,7 @@ public class T2E1D {
 			for (int i = 0; i < deck.size() - 1; i++) {
 				if (deck.get(i) > deck.get(i + 1))
 					flag = false;
+				i++;
 			}
 			flag = true;
 		}

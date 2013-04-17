@@ -7,7 +7,6 @@ public class T0a {
 
 	public void source(List<Integer> deck) {
 		boolean flag;
-
 		for (int i = 0; i < deck.size() - 1; i++) {
 			if (deck.get(i) > deck.get(i + 1))
 				flag = false;
@@ -18,7 +17,7 @@ public class T0a {
 			Collections.shuffle(deck);
 
 			int i = 0;
-			while (i < deck.size()) {
+			while (i < deck.size() - 1) {
 				if (deck.get(i) > deck.get(i + 1))
 					flag = false;
 				i++;
