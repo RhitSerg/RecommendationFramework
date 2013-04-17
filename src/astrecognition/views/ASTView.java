@@ -59,7 +59,6 @@ public class ASTView extends AbstractView {
 			if (parent.equals(getViewSite())) {
 				if (this.root == null) {
 					root = ASTBuilder.getWorkspaceASTs(Settings.VISITOR_CLASS).makeLabelsUnique(new HashMap<String, Integer>());
-					System.out.println(root);
 					return new Object[] { root };
 				}
 				return getChildren(root);

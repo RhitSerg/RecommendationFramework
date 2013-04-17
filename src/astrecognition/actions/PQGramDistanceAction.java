@@ -3,8 +3,11 @@ package astrecognition.actions;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
+import pqgram.PQGram;
+
 import astrecognition.Activator;
 import astrecognition.Settings;
+import astrecognition.model.Tree;
 import astrecognition.views.AbstractView;
 
 /**
@@ -21,6 +24,13 @@ public class PQGramDistanceAction extends PQGramAction {
 		this.setToolTipText(DISTANCE_TOOLTIP);
 		this.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+	}
+	
+	private double getSourceTargetDistance() {
+		Tree workspaceTree = this.getWorkspaceTree();
+		Tree sourceMethodTree = this.getSourceMethodBody(workspaceTree);
+		Tree targetMethodTree = this.getFirstTargetMethodBody(workspaceTree);
+		return PQGram.getDistance(sourceMethodTree, targetMethodTree, Settings.P, Settings.Q);
 	}
 
 	@Override

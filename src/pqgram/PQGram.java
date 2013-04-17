@@ -12,23 +12,20 @@ import astrecognition.model.Tree;
  */
 public class PQGram {
 	public static String STAR_LABEL = "*";
+	private static Graph NULL_GRAPH = new Tree(STAR_LABEL); 
 
-	public static double getDistance(Graph T1, Graph T2, int p, int q) {
-		Profile profile = PQGram.getProfile(T1, p, q);
-		Profile profile2 = PQGram.getProfile(T2, p, q);
-		Profile mUnion = profile.union(profile2);
-		Profile mIntersection = profile.intersect(profile2);
-		return 1 - (2.0 * mIntersection.size()) / mUnion.size();
+	public static double getDistance(Graph g, Graph h, int p, int q) {
+		Profile profile = PQGram.getProfile(g, p, q);
+		Profile profile2 = PQGram.getProfile(h, p, q);
+		Profile union = profile.union(profile2);
+		Profile intersection = profile.intersect(profile2);
+		return 1 - (2.0 * intersection.size()) / union.size();
 	}
 
 	public static Profile getProfile(Graph t, int p, int q) {
-		HashSet<Graph> visited = new HashSet<Graph>();
-
-		Profile profile = new Profile();
 		Graph[] stem = new Graph[p];
-		Arrays.fill(stem, new Tree(STAR_LABEL));
-		profile = getLabelTuples(p, q, profile, t, stem, visited);
-		return profile;
+		Arrays.fill(stem, NULL_GRAPH);
+		return getLabelTuples(p, q, new Profile(), t, stem, new HashSet<Graph>());
 	}
 
 	private static Profile getLabelTuples(int p, int q, Profile profile,
@@ -40,7 +37,7 @@ public class PQGram {
 		visited.add(a);
 
 		Graph[] base = new Graph[q];
-		Arrays.fill(base, new Tree(STAR_LABEL));
+		Arrays.fill(base, NULL_GRAPH);
 		stem = shift(stem, a);
 		if (a.isSink()) {
 			profile.add(concatenate(stem, base));
@@ -51,7 +48,7 @@ public class PQGram {
 				profile = getLabelTuples(p, q, profile, c, stem, visited);
 			}
 			for (int k = 1; k < q; k++) {
-				base = shift(base, new Tree(STAR_LABEL));
+				base = shift(base, NULL_GRAPH);
 				profile.add(concatenate(stem, base));
 			}
 		}

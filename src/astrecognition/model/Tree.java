@@ -89,10 +89,6 @@ public class Tree extends Graph {
 	public List<Tree> getChildren() {
 		return this.children;
 	}
-
-	public boolean isLeaf() {
-		return this.children.size() == 0;
-	}
 	
 	public int getPositionBetween(Graph left, Graph right) {
 		if (left == null) {
@@ -174,6 +170,10 @@ public class Tree extends Graph {
 			return this.getUniqueLabel().compareTo(((Tree) graph).getUniqueLabel());
 		}
 		return -1;
+	}
+
+	public boolean isLeaf() {
+		return this.children.size() == 0;
 	}
 	
 	@Override

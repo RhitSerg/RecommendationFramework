@@ -51,9 +51,8 @@ public class TreeVisitor extends GeneralVisitor {
 	
 	@Override
 	public boolean visit(ExpressionStatement node) {
-		this.skipVisit(node); // SKIPPING EXPRESSION STATEMENTS BECAUSE THEY HAVE NO USE
+		this.skipVisit(node);
 		return true;
-//		return super.visit(node);
 	}
 	
 	protected void skipVisit(ASTNode node) {
@@ -82,7 +81,7 @@ public class TreeVisitor extends GeneralVisitor {
 		treeNode.setLineNumber(lineNumber);
 		for (Object object : NodeLabel.getChildren(astNode)) {
 			String text = NodeLabel.getText(object);
-			if (!text.equals("")){// && !text.contains("IDENTIFIER") && !text.contains("variable binding")) {
+			if (!text.equals("") && !text.contains("EXPRESSION")){// && !text.contains("variable binding") && !text.contains("IDENTIFIER")) {
 				Tree newTreeNode = new Tree(NodeLabel.getText(object));
 				newTreeNode.setLineNumber(lineNumber);
 				newTreeNode.setStartPosition(astNode.getStartPosition());

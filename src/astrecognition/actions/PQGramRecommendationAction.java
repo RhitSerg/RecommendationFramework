@@ -86,9 +86,9 @@ public class PQGramRecommendationAction extends PQGramAction implements IPropert
 
 	@Override
 	public void propertyChanged(Object source, int propId) {
-		if (propId == IEditorPart.PROP_DIRTY) {
-			this.run();
-		}
+//		if (propId == IEditorPart.PROP_DIRTY) {
+//			this.run();
+//		}
 	}
 
 }

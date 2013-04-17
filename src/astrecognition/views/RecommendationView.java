@@ -51,7 +51,7 @@ public class RecommendationView extends AbstractView {
 		this.pqGramDistanceAction = new PQGramDistanceAction(this);
 		this.pqGramRecommendationAction = new PQGramRecommendationAction(this.recommendedEdits);
 		this.pqGramBestRecommendationAction = new PQGramBestRecommendationAction(this.recommendedEdits, this);
-		this.pqGramTestAction = new PQGramTestAction(this);
+		this.pqGramTestAction = new PQGramTestAction();
 	}
 
 }

@@ -38,6 +38,10 @@ public class Multiset<T> {
 		return this.items;
 	}
 	
+	public T get(int i) {
+		return this.items.get(i);
+	}
+	
 	public Multiset<T> clone() {
 		Multiset<T> copy = new Multiset<T>();
 		
@@ -90,10 +94,6 @@ public class Multiset<T> {
 		}
 		
 		return union;
-	}
-	
-	public T get(int i) {
-		return this.items.get(i);
 	}
 
 }

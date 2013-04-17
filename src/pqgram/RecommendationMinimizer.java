@@ -7,6 +7,7 @@ import java.util.Map;
 
 import pqgram.edits.Deletion;
 import pqgram.edits.Insertion;
+import pqgram.edits.Relabeling;
 import astrecognition.model.Tree;
 /**
  * Minimizes deletions and insertions based on their order, keeping track of previous edits
@@ -49,6 +50,7 @@ public class RecommendationMinimizer {
 					String secondInsertionPart = getOriginalLabel(insertion.getB());
 					if (firstInsertionPart.equals(newParentLabel) && secondInsertionPart.equals(secondDeletionPart)) { // if the deletion and insertion are inverses, we don't need them
 						insertionsToRemove.add(insertion);
+						System.out.println(deletion + ", " + insertion);
 						hasMatchingInsertion = true;
 					}
 				}
@@ -113,7 +115,7 @@ public class RecommendationMinimizer {
 		deletions.removeAll(deletionsToRemove);
 	}
 
-	public static Map<String, String> getRelabelings(List<Insertion> insertions, List<Deletion> deletions, Tree sourceTree, Tree targetTree) {
+	public static Map<String, String> getRelabelings(List<Insertion> insertions, List<Deletion> deletions, List<Relabeling> relabelingEdits, Tree sourceTree, Tree targetTree) {
 		List<Insertion> insertionsToRemove = new ArrayList<Insertion>();
 		List<Deletion> deletionsToRemove = new ArrayList<Deletion>();
 		
@@ -148,6 +150,13 @@ public class RecommendationMinimizer {
 					relabelings.put(deleted, inserted);
 					insertionsToRemove.add(insertion);
 					deletionsToRemove.add(deletion);
+					if (!deleted.equals(relabelings.get(deleted)) && !sourceTree.find(deleted).getOriginalLabel().equals(targetTree.find(relabelings.get(deleted)).getOriginalLabel())) {
+						Relabeling relabeling = new Relabeling(deleted, inserted);
+						relabeling.setLineNumber(deletion.getLineNumber());
+						relabeling.setStartPosition(deletion.getStartPosition());
+						relabeling.setEndPosition(deletion.getEndPosition());
+						relabelingEdits.add(relabeling);
+					}
 				}
 			}
 		}

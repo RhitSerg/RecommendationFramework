@@ -33,32 +33,49 @@ public class PQGramRecommendation {
 		buildCommonTrees(common, built, childToParent);
 		
 		List<Deletion> deletions = getDeletions(extra, built, childToParent);
+		System.out.println("Number of deletions = " + deletions.size());
 		List<Insertion> insertions = getInsertions(missing, built, childToParent);
+		System.out.println("Number of insertions = " + insertions.size());
 		
 		// minimizing deletions/insertions by finding eligible relabelings and matching up pairs due to relabeling propagations
-		Map<String, String> relabelings = RecommendationMinimizer.getRelabelings(insertions, deletions, sourceTree, targetTree);
+		List<Relabeling> relabelingEdits = new ArrayList<Relabeling>();
+		Map<String, String> relabelings = RecommendationMinimizer.getRelabelings(insertions, deletions, relabelingEdits, sourceTree, targetTree);
 		RecommendationMinimizer.minimizeDeletions(insertions, deletions, relabelings);
 		RecommendationMinimizer.minimizeInsertions(insertions, deletions, relabelings);
+		
+		System.out.println("Number of deletions = " + deletions.size());
+		System.out.println("Number of insertions = " + insertions.size());
 				
 		List<Edit> edits = new ArrayList<Edit>();
+		edits.addAll(relabelingEdits);
 		
-		for (String oldName : relabelings.keySet()) {
-			if (!oldName.equals(relabelings.get(oldName)) && !sourceTree.find(oldName).getOriginalLabel().equals(targetTree.find(relabelings.get(oldName)).getOriginalLabel())) {
-				edits.add(new Relabeling(oldName, relabelings.get(oldName)));
+//		for (String oldName : relabelings.keySet()) {
+//			if (!oldName.equals(relabelings.get(oldName)) && !sourceTree.find(oldName).getOriginalLabel().equals(targetTree.find(relabelings.get(oldName)).getOriginalLabel())) {
+//				edits.add(new Relabeling(oldName, relabelings.get(oldName)));
+//			}
+//		}
+		
+		for (Deletion deletion : deletions) {
+			Tree correspondingTree = sourceTree.find(deletion.getB());
+			if (correspondingTree != null) {
+				deletion.setLineNumber(correspondingTree.getLineNumber());
+				deletion.setStartPosition(correspondingTree.getStartPosition());
+				deletion.setEndPosition(correspondingTree.getEndPosition());
+			}
+		}
+		for (Insertion insertion : insertions) {
+			Tree correspondingTree = sourceTree.find(insertion.getA());
+			Tree nextChild = correspondingTree.getChildren().get(insertion.getPosition());
+			if (correspondingTree != null) {
+				insertion.setLineNumber(nextChild.getLineNumber() - 1);
+//				insertion.setLineNumber(correspondingTree.getLineNumber());
+				insertion.setStartPosition(correspondingTree.getStartPosition());
+				insertion.setEndPosition(correspondingTree.getEndPosition());
 			}
 		}
 		
 		edits.addAll(deletions);
 		edits.addAll(insertions);
-		
-		for (Edit edit : edits) {
-			Tree correspondingTree = sourceTree.find(edit.getA());
-			if (correspondingTree != null) {
-				edit.setLineNumber(correspondingTree.getLineNumber());
-				edit.setStartPosition(correspondingTree.getStartPosition());
-				edit.setEndPosition(correspondingTree.getEndPosition());
-			}
-		}
 		
 		// Condensing edits that correspond to the same place in the code
 		Collections.sort(edits, new Comparator<Edit>() {
@@ -75,7 +92,11 @@ public class PQGramRecommendation {
 		
 		List<Deletion> deletions = new ArrayList<Deletion>();
 		for (PositionalEdit posEdit : posEdits) {
-			deletions.add(new Deletion(posEdit.getA(), posEdit.getB(), posEdit.getPosition()));
+			Deletion deletion = new Deletion(posEdit.getA(), posEdit.getB(), posEdit.getPosition());
+			deletion.setLineNumber(posEdit.getLineNumber());
+			deletion.setStartPosition(posEdit.getStartPosition());
+			deletion.setEndPosition(posEdit.getEndPosition());
+			deletions.add(deletion);
 		}
 		return deletions;
 	}
@@ -85,7 +106,11 @@ public class PQGramRecommendation {
 		
 		List<Insertion> insertions = new ArrayList<Insertion>();
 		for (PositionalEdit posEdit : posEdits) {
-			insertions.add(new Insertion(posEdit.getA(), posEdit.getB(), posEdit.getPosition(), posEdit.getPosition()));
+			Insertion insertion = new Insertion(posEdit.getA(), posEdit.getB(), posEdit.getPosition(), posEdit.getPosition());
+			insertion.setLineNumber(posEdit.getLineNumber());
+			insertion.setStartPosition(posEdit.getStartPosition());
+			insertion.setEndPosition(posEdit.getEndPosition());
+			insertions.add(insertion);
 		}
 		return insertions;
 	}
@@ -106,7 +131,11 @@ public class PQGramRecommendation {
 				parent = getTree(tup.get(1), built);
 				position = addChildToParent(ancestor, parent, childToParent);
 				if (position >= 0) {
-					edits.add(new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position));
+					PositionalEdit positionalEdit = new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position);
+					positionalEdit.setLineNumber(ancestor.getLineNumber());
+					positionalEdit.setStartPosition(ancestor.getStartPosition());
+					positionalEdit.setEndPosition(ancestor.getEndPosition());
+					edits.add(positionalEdit);
 				}
 				ancestor = parent;
 			}
@@ -115,18 +144,11 @@ public class PQGramRecommendation {
 				Tree currentTree = getTree(currentGraph, built);
 				position = addChildToParent(parent, currentTree, childToParent);
 				if (position >= 0 && !currentGraph.equals(PQGram.STAR_LABEL)) {
-					/*Graph left, right;
-					if (i == Settings.P) {
-						left = null;
-						right = tup.get(i+1);
-					} else if (i == tup.length() - 1) {
-						left = tup.get(i-1);
-						right = null;
-					} else {
-						left = tup.get(i-1);
-						right = tup.get(i+1);
-					}*/
-					edits.add(new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), position));
+					PositionalEdit positionalEdit = new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), position);
+					positionalEdit.setLineNumber(parent.getLineNumber());
+					positionalEdit.setStartPosition(parent.getStartPosition());
+					positionalEdit.setEndPosition(parent.getEndPosition());
+					edits.add(positionalEdit);
 				}
 			}
 		}
@@ -149,7 +171,14 @@ public class PQGramRecommendation {
 	}
 	
 	private static Tree getTree(Graph graph, Map<String, Tree> builtTrees) {
-		return getTree(graph.getUniqueLabel(), builtTrees);
+		Tree tree = getTree(graph.getUniqueLabel(), builtTrees);
+		if (graph instanceof Tree) {
+			Tree graphTree = (Tree) graph;
+			tree.setLineNumber(graphTree.getLineNumber());
+			tree.setStartPosition(graphTree.getStartPosition());
+			tree.setEndPosition(graphTree.getEndPosition());
+		}
+		return tree;
 	}
 	
 	// hook up a child to its parent if not already done and return position; return -1 if already done

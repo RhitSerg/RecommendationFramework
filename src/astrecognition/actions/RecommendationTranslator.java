@@ -22,6 +22,7 @@ public class RecommendationTranslator {
 	}
 	
 	public static String translate(Edit edit) {
+		System.out.println(edit.getClass());
 		if (edit instanceof Insertion) {
 			return translateInsertion((Insertion) edit);
 		} else if (edit instanceof Deletion) {
@@ -75,11 +76,12 @@ public class RecommendationTranslator {
 	}
 	
 	private static String translateDeletion(Deletion deletion) {
-		if (isUsable(deletion)) {
-			return deletion.toString();
-		} else {
-			return "Delete unnecessary code.";
-		}
+		return deletion.toString();
+//		if (isUsable(deletion)) {
+//			return deletion.toString();
+//		} else {
+//			return deletion.getLineNumber() + ": Delete unnecessary code.";
+//		}
 	}
 	
 	private static String getReadableLabel(String label) {

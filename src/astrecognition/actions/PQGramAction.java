@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.eclipse.jface.action.Action;
 
-import pqgram.PQGram;
 import astrecognition.ASTBuilder;
 import astrecognition.Settings;
 import astrecognition.model.Tree;
@@ -31,7 +30,6 @@ public abstract class PQGramAction extends Action {
 	
 	protected Tree getFirstTargetMethodBody(Tree workspaceTree) {
 		Tree typeDec = this.getTypeDeclarationTree(workspaceTree);
-		System.out.println("Type Dec: " + typeDec.getParent().getLabel());
 		return typeDec.getChildren().get(7)
 				.getChildren().get(typeDec.getChildren().get(7).getChildren().size()-1);
 	}
@@ -44,13 +42,6 @@ public abstract class PQGramAction extends Action {
 			methodTrees.add(typeDec.getChildren().get(i + 7));
 		}
 		return methodTrees;
-	}
-	
-	protected double getSourceTargetDistance() {
-		Tree workspaceTree = this.getWorkspaceTree();
-		Tree sourceMethodTree = this.getSourceMethodBody(workspaceTree);
-		Tree targetMethodTree = this.getFirstTargetMethodBody(workspaceTree);
-		return PQGram.getDistance(sourceMethodTree, targetMethodTree, Settings.P, Settings.Q);
 	}
 	
 	public abstract void run();

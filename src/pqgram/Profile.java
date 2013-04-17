@@ -16,15 +16,15 @@ public class Profile extends Multiset<Tuple<Graph>> {
 	}
 	
 	public Profile union(Profile other) {
-		return makeIndex(super.union(other));
+		return makeProfile(super.union(other));
 	}
 	
 	public Profile intersect(Profile other) {
-		return makeIndex(super.intersect(other));
+		return makeProfile(super.intersect(other));
 	}
 	
 	public Profile difference(Profile other) {
-		return makeIndex(super.difference(other));
+		return makeProfile(super.difference(other));
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class Profile extends Multiset<Tuple<Graph>> {
 		return i;
 	}
 	
-	private Profile makeIndex(Multiset<Tuple<Graph>> set) {
+	private Profile makeProfile(Multiset<Tuple<Graph>> set) {
 		Profile i = new Profile();
 		
 		for (Tuple<Graph> tup : set.getAllElements()) {

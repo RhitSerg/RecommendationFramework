@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -67,33 +66,35 @@ public class Activator extends AbstractUIPlugin {
 	public static IJavaProject getIJavaProject() {
 		return javaProject;
 	}
-	
+
 	public static void setIJavaProject(IJavaProject project) {
 		javaProject = project;
 	}
-	
-	
+
 	/**
 	 * Logs the message in the Error log view.
 	 * 
-	 * @param status The status code from {@link IStatus}.
-	 * Can be one of the following:
-	 * <ul> 
-	 * <li>{@link IStatus#INFO}</li>
-	 * <li>{@link IStatus#CANCEL}</li>
-	 * <li>{@link IStatus#WARNING}</li>
-	 * <li>{@link IStatus#ERROR}</li>
-	 * <li>{@link IStatus#OK}</li>
-	 * </ul>
-	 * @param message The message to be logged.
-	 * @param t The exception that caused this message.
+	 * @param status
+	 *            The status code from {@link IStatus}. Can be one of the
+	 *            following:
+	 *            <ul>
+	 *            <li>{@link IStatus#INFO}</li>
+	 *            <li>{@link IStatus#CANCEL}</li>
+	 *            <li>{@link IStatus#WARNING}</li>
+	 *            <li>{@link IStatus#ERROR}</li>
+	 *            <li>{@link IStatus#OK}</li>
+	 *            </ul>
+	 * @param message
+	 *            The message to be logged.
+	 * @param t
+	 *            The exception that caused this message.
 	 */
 	public static void log(int status, String message, Throwable t) {
 		ILog aLog = plugin.getLog();
 		IStatus aStatus = new Status(status, PLUGIN_ID, message, t);
- 		aLog.log(aStatus);
+		aLog.log(aStatus);
 	}
-	
+
 	public static IJavaModel getJavaModel() {
 		return javaModel;
 	}

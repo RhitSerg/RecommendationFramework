@@ -14,19 +14,12 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 import astrecognition.ASTBuilder;
 import astrecognition.Settings;
 import astrecognition.model.Tree;
-import astrecognition.views.AbstractView;
 import astrecognition.views.ProjectPickerDialog;
 import cfgrecognition.actions.CFGExceptionalUnitGraphAction;
 import cfgrecognition.loader.SootClassLoader;
 import cfgrecognition.model.CFG;
 
-public class PQGramTestAction extends PQGramAction {
-	private AbstractView parentView;
-
-	public PQGramTestAction(AbstractView parentView) {
-		this.parentView = parentView;
-	}
-	
+public class PQGramTestAction extends PQGramAction {	
 	@Override
 	public void run() {
 		ProjectPickerDialog projectPicker = new ProjectPickerDialog(Display
@@ -39,8 +32,8 @@ public class PQGramTestAction extends PQGramAction {
 			writer.append("Name");
 			writer.append(',');
 			writer.append("AST distance");
-			writer.append(',');
-			writer.append("CFG distance");
+			//writer.append(',');
+			//writer.append("CFG distance");
 			writer.append('\n');
 			IJavaProject javaProject = projectPicker.getProject();
 			Collection<Tree> classes = ASTBuilder.getPackages(javaProject.getProject(),	Settings.VISITOR_CLASS);
@@ -56,28 +49,16 @@ public class PQGramTestAction extends PQGramAction {
 						.getChildren().get(typeDeclarationTree.getChildren().get(7).getChildren().size()-1);
 				double distance = PQGram.getDistance(sourceMethodTree,
 						targetMethodTree, Settings.P, Settings.Q);
-				/*List<Edit> edits = PQGramRecommendation.getEdits(
-						PQGram.getProfile(sourceMethodTree, Settings.P, Settings.Q),
-						PQGram.getProfile(targetMethodTree,	Settings.P, Settings.Q), 
-						sourceMethodTree, 
-						targetMethodTree);
-				title = String.format("Test results (%s)", className);
-				message = String.format("%d,%d-Gram AST distance: %f\n\nNumber of edits: %d\n\nEdits:\n", Settings.P,Settings.Q, distance, edits.size());
-				for (Edit edit : edits) {
-					message += String.format("%s\n", edit);
-				}
-				message += "\n";*/
 				
-				List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className, loader);
-				CFG sourceCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(1).getBody());
-				CFG targetCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(2).getBody());
-				double cfgDistance = PQGram.getDistance(sourceCFG, targetCFG, Settings.P, Settings.Q);
-				//message += String.format("%d,%d-Gram CFG distance: %f\n\n", Settings.P, Settings.Q, cfgDistance);
+				//List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className, loader);
+				//CFG sourceCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(1).getBody());
+				//CFG targetCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(2).getBody());
+				//double cfgDistance = PQGram.getDistance(sourceCFG, targetCFG, Settings.P, Settings.Q);
 				writer.append(className);
 				writer.append(',');
 				writer.append("" + distance);
-				writer.append(',');
-				writer.append("" + cfgDistance);
+				//writer.append(',');
+				//writer.append("" + cfgDistance);
 				writer.append('\n');
 			}
 			writer.flush();

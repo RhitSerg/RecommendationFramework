@@ -93,12 +93,13 @@ import astrecognition.model.Tree;
  * Base class for visiting all AST node types
  */
 public abstract class GeneralVisitor extends ASTVisitor {
-	
+
 	public abstract Tree getRoot();
-	
+
 	protected abstract void generalVisit(ASTNode node);
+
 	protected abstract void skipVisit(ASTNode node);
-	
+
 	@Override
 	public boolean visit(AnnotationTypeDeclaration node) {
 		this.generalVisit(node);
@@ -596,425 +597,424 @@ public abstract class GeneralVisitor extends ASTVisitor {
 		this.generalVisit(node);
 		return super.visit(node);
 	}
+
 	@Override
 	public void endVisit(AnnotationTypeDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(AnnotationTypeMemberDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(AnonymousClassDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ArrayAccess node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ArrayCreation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ArrayInitializer node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ArrayType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(AssertStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(Assignment node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(Block node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(BlockComment node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(BooleanLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(BreakStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(CastExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(CatchClause node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(CharacterLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ClassInstanceCreation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(CompilationUnit node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ConditionalExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ConstructorInvocation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ContinueStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(DoStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(EmptyStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(EnhancedForStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(EnumConstantDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(EnumDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ExpressionStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(FieldAccess node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(FieldDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ForStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(IfStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ImportDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(InfixExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(InstanceofExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(Initializer node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(Javadoc node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(LabeledStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(LineComment node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MarkerAnnotation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MemberRef node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MemberValuePair node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MethodRef node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MethodRefParameter node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MethodDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(MethodInvocation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(Modifier node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(NormalAnnotation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(NullLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(NumberLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(PackageDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ParameterizedType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ParenthesizedExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(PostfixExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(PrefixExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(PrimitiveType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(QualifiedName node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(QualifiedType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ReturnStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SimpleName node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SimpleType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SingleMemberAnnotation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SingleVariableDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(StringLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SuperConstructorInvocation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SuperFieldAccess node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SuperMethodInvocation node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SwitchCase node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SwitchStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(SynchronizedStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TagElement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TextElement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ThisExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(ThrowStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TryStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TypeDeclaration node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TypeDeclarationStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TypeLiteral node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(TypeParameter node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(UnionType node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(VariableDeclarationExpression node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(VariableDeclarationStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(VariableDeclarationFragment node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(WhileStatement node) {
-		
-		super.endVisit(node);
-	}
-	@Override
-	public void endVisit(WildcardType node) {
-		
 		super.endVisit(node);
 	}
 
+	@Override
+	public void endVisit(AnnotationTypeMemberDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(AnonymousClassDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ArrayAccess node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ArrayCreation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ArrayInitializer node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ArrayType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(AssertStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(Assignment node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(Block node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(BlockComment node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(BooleanLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(BreakStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(CastExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(CatchClause node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(CharacterLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ClassInstanceCreation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(CompilationUnit node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ConditionalExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ConstructorInvocation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ContinueStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(DoStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(EmptyStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(EnhancedForStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(EnumConstantDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(EnumDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ExpressionStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(FieldAccess node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(FieldDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ForStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(IfStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ImportDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(InfixExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(InstanceofExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(Initializer node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(Javadoc node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(LabeledStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(LineComment node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MarkerAnnotation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MemberRef node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MemberValuePair node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MethodRef node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MethodRefParameter node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MethodDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(MethodInvocation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(Modifier node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(NormalAnnotation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(NullLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(NumberLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(PackageDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ParameterizedType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ParenthesizedExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(PostfixExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(PrefixExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(PrimitiveType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(QualifiedName node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(QualifiedType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ReturnStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SimpleName node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SimpleType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SingleMemberAnnotation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SingleVariableDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(StringLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SuperConstructorInvocation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SuperFieldAccess node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SuperMethodInvocation node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SwitchCase node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SwitchStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(SynchronizedStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TagElement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TextElement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ThisExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(ThrowStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TryStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TypeDeclaration node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TypeDeclarationStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TypeLiteral node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(TypeParameter node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(UnionType node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(VariableDeclarationExpression node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(VariableDeclarationStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(VariableDeclarationFragment node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(WhileStatement node) {
+		super.endVisit(node);
+	}
+
+	@Override
+	public void endVisit(WildcardType node) {
+		super.endVisit(node);
+	}
 }
