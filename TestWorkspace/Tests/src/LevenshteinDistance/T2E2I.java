@@ -11,7 +11,10 @@ public class T2E2I {
 			distance[0][j] = j;
 
 		for (int i = 1; i <= str1.length(); i++)
-			for (int j = 1; j <= str2.length(); j++)
+			for (int j = 1; j <= str2.length(); j++) {
+				
+			}
+		return 0;
 	}
 
 	public static int target(CharSequence str1, CharSequence str2) {
