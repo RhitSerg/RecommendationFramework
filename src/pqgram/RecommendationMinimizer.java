@@ -151,7 +151,7 @@ public class RecommendationMinimizer {
 					insertionsToRemove.add(insertion);
 					deletionsToRemove.add(deletion);
 					if (!deleted.equals(relabelings.get(deleted)) && !sourceTree.find(deleted).getOriginalLabel().equals(targetTree.find(relabelings.get(deleted)).getOriginalLabel())) {
-						Relabeling relabeling = new Relabeling(deleted, inserted);
+						Relabeling relabeling = new Relabeling(deleted, inserted, deletion.getBG(), insertion.getBG());
 						relabeling.setLineNumber(deletion.getLineNumber());
 						relabeling.setStartPosition(deletion.getStartPosition());
 						relabeling.setEndPosition(deletion.getEndPosition());

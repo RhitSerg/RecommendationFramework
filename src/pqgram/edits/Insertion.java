@@ -3,6 +3,8 @@ package pqgram.edits;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import astrecognition.model.Graph;
+
 public class Insertion extends PositionalEdit {
 	
 	private static String INSERTION_STRING = "%d: Insert %s on to %s (%d, %d) {%s}";
@@ -10,8 +12,8 @@ public class Insertion extends PositionalEdit {
 	private int end;
 	private Collection<String> inheritedChildren;
 	
-	public Insertion(String a, String b, int start, int end) {
-		super(a, b, start);
+	public Insertion(String a, String b, Graph aG, Graph bG, int start, int end) {
+		super(a, b, aG, bG, start);
 		this.end = end;
 		this.inheritedChildren = new ArrayList<String>();
 	}

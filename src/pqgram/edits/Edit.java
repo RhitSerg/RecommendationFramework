@@ -1,24 +1,47 @@
 package pqgram.edits;
+
+import astrecognition.model.Graph;
+
 /**
  * Base class for tree edits
  */
 public abstract class Edit {
 	protected String a;
 	protected String b;
+	protected Graph aG;
+	protected Graph bG;
 	protected int lineNumber;
 	protected int startPosition;
 	protected int endPosition;
 	
-	public Edit(String a, String b) {
-		this(a, b, -1, -1, -1);
+	public Edit(String a, String b, Graph aG, Graph bG) {
+		this(a, b, aG, bG, -1, -1, -1);
 	}
 	
-	public Edit(String a, String b, int lineNumber, int startPosition, int endPosition) {
+	public Edit(String a, String b, Graph aG, Graph bG, int lineNumber, int startPosition, int endPosition) {
 		this.a = a;
 		this.b = b;
+		this.aG = aG;
+		this.bG = bG;
 		this.lineNumber = lineNumber;
 		this.startPosition = startPosition;
 		this.endPosition = endPosition;
+	}
+	
+	public Graph getAG() {
+		return this.aG;
+	}
+	
+	public void setAG(Graph aG) {
+		this.aG = aG;
+	}
+	
+	public Graph getBG() {
+		return this.bG;
+	}
+	
+	public void setBG(Graph bG) {
+		this.bG = bG;
 	}
 	
 	public String getA() {

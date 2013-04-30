@@ -63,15 +63,22 @@ public class PQGramRecommendation {
 				deletion.setEndPosition(correspondingTree.getEndPosition());
 			}
 		}
-		for (Insertion insertion : insertions) {
+		for (int i = 0; i < insertions.size(); i++) {
+			Insertion insertion = insertions.get(i);
 			Tree correspondingTree = sourceTree.find(insertion.getA());
-			Tree nextChild = correspondingTree.getChildren().get(insertion.getPosition());
+			//Tree nextChild = correspondingTree.getChildren().get(insertion.getPosition());
 			if (correspondingTree != null) {
-				insertion.setLineNumber(nextChild.getLineNumber() - 1);
-//				insertion.setLineNumber(correspondingTree.getLineNumber());
+				insertion.setLineNumber(correspondingTree.getLineNumber() - 1);
 				insertion.setStartPosition(correspondingTree.getStartPosition());
 				insertion.setEndPosition(correspondingTree.getEndPosition());
+			} else {
+				if (i > 0) {
+					insertion.setLineNumber(insertions.get(i - 1).getLineNumber());
+					insertion.setStartPosition(insertions.get(i - 1).getStartPosition());
+					insertion.setEndPosition(insertions.get(i - 1).getEndPosition());
+				}
 			}
+			System.out.println(insertion + ", " + insertion.getLineNumber());
 		}
 		
 		edits.addAll(deletions);
@@ -92,7 +99,7 @@ public class PQGramRecommendation {
 		
 		List<Deletion> deletions = new ArrayList<Deletion>();
 		for (PositionalEdit posEdit : posEdits) {
-			Deletion deletion = new Deletion(posEdit.getA(), posEdit.getB(), posEdit.getPosition());
+			Deletion deletion = new Deletion(posEdit.getA(), posEdit.getB(), posEdit.getAG(), posEdit.getBG(), posEdit.getPosition());
 			deletion.setLineNumber(posEdit.getLineNumber());
 			deletion.setStartPosition(posEdit.getStartPosition());
 			deletion.setEndPosition(posEdit.getEndPosition());
@@ -106,7 +113,7 @@ public class PQGramRecommendation {
 		
 		List<Insertion> insertions = new ArrayList<Insertion>();
 		for (PositionalEdit posEdit : posEdits) {
-			Insertion insertion = new Insertion(posEdit.getA(), posEdit.getB(), posEdit.getPosition(), posEdit.getPosition());
+			Insertion insertion = new Insertion(posEdit.getA(), posEdit.getB(), posEdit.getAG(), posEdit.getBG(), posEdit.getPosition(), posEdit.getPosition());
 			insertion.setLineNumber(posEdit.getLineNumber());
 			insertion.setStartPosition(posEdit.getStartPosition());
 			insertion.setEndPosition(posEdit.getEndPosition());
@@ -131,7 +138,7 @@ public class PQGramRecommendation {
 				parent = getTree(tup.get(1), built);
 				position = addChildToParent(ancestor, parent, childToParent);
 				if (position >= 0) {
-					PositionalEdit positionalEdit = new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), position);
+					PositionalEdit positionalEdit = new PositionalEdit(ancestor.getUniqueLabel(), parent.getUniqueLabel(), ancestor, parent, position);
 					positionalEdit.setLineNumber(ancestor.getLineNumber());
 					positionalEdit.setStartPosition(ancestor.getStartPosition());
 					positionalEdit.setEndPosition(ancestor.getEndPosition());
@@ -144,7 +151,7 @@ public class PQGramRecommendation {
 				Tree currentTree = getTree(currentGraph, built);
 				position = addChildToParent(parent, currentTree, childToParent);
 				if (position >= 0 && !currentGraph.equals(PQGram.STAR_LABEL)) {
-					PositionalEdit positionalEdit = new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), position);
+					PositionalEdit positionalEdit = new PositionalEdit(parent.getUniqueLabel(), currentGraph.getUniqueLabel(), parent, currentGraph, position);
 					positionalEdit.setLineNumber(parent.getLineNumber());
 					positionalEdit.setStartPosition(parent.getStartPosition());
 					positionalEdit.setEndPosition(parent.getEndPosition());
