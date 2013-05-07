@@ -12,6 +12,7 @@ public abstract class Graph implements Comparable<Graph> {
 	public abstract String getLabel();
 	public abstract String getUniqueLabel();
 	public abstract String toString();
+	public abstract int getTotalNodeCount();
 	
 	@Override
 	public boolean equals(Object obj) {

@@ -30,7 +30,6 @@ public class PQGramDifferenceFinder {
 			}
 			CFG g = (CFG) graph;
 			if (!commonCFGs.contains(g)) {
-				System.out.println(e.toString());
 				differences.add(g.getId());
 			}
 		}

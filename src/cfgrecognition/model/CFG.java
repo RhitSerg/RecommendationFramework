@@ -112,6 +112,7 @@ public class CFG extends Graph {
 		}
 	}
 
+	@Override
 	public int getTotalNodeCount() {
 		HashSet<String> allNodes = new HashSet<String>();
 		this.getAllNodes(allNodes);
