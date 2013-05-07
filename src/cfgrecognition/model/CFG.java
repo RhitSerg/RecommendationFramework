@@ -2,7 +2,9 @@ package cfgrecognition.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+
 import astrecognition.model.Graph;
 
 public class CFG extends Graph {
@@ -96,5 +98,23 @@ public class CFG extends Graph {
 
 	public int getId() {
 		return this.id;
+	}
+
+	public void getAllNodes(HashSet<String> aggregateLabels) {
+
+		aggregateLabels.add(this.getExactLabel());
+
+		for (CFG cfg : this.connections) {
+			if (!aggregateLabels.contains(cfg.getExactLabel())) {
+				aggregateLabels.add(cfg.getExactLabel());
+				cfg.getAllNodes(aggregateLabels);
+			}
+		}
+	}
+
+	public int getTotalNodeCount() {
+		HashSet<String> allNodes = new HashSet<String>();
+		this.getAllNodes(allNodes);
+		return allNodes.size();
 	}
 }

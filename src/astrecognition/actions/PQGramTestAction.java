@@ -28,12 +28,14 @@ public class PQGramTestAction extends PQGramAction {
 		SootClassLoader loader = SootClassLoader.instance();
 		FileWriter writer;
 		try {
-			writer = new FileWriter("C:\\Users\\zimmerka\\Desktop\\test-results.csv");
+			writer = new FileWriter("C:\\Users\\thairp\\Desktop\\test-results.csv");
 			writer.append("Name");
 			writer.append(',');
 			writer.append("AST distance");
-			//writer.append(',');
-			//writer.append("CFG distance");
+			writer.append(',');
+			writer.append("CFG distance");
+			writer.append(',');
+			writer.append("node count");
 			writer.append('\n');
 			IJavaProject javaProject = projectPicker.getProject();
 			Collection<Tree> classes = ASTBuilder.getPackages(javaProject.getProject(),	Settings.VISITOR_CLASS);
@@ -50,15 +52,17 @@ public class PQGramTestAction extends PQGramAction {
 				double distance = PQGram.getDistance(sourceMethodTree,
 						targetMethodTree, Settings.P, Settings.Q);
 				
-				//List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className, loader);
-				//CFG sourceCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(1).getBody());
-				//CFG targetCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(2).getBody());
-				//double cfgDistance = PQGram.getDistance(sourceCFG, targetCFG, Settings.P, Settings.Q);
+				List<ExceptionalUnitGraph> methodEUGs = CFGExceptionalUnitGraphAction.getMethodExceptionalUnitGraphs(className, loader);
+				CFG sourceCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(1).getBody());
+				CFG targetCFG = CFGExceptionalUnitGraphAction.getCFG(methodEUGs.get(2).getBody());
+				double cfgDistance = PQGram.getDistance(sourceCFG, targetCFG, Settings.P, Settings.Q);
 				writer.append(className);
 				writer.append(',');
 				writer.append("" + distance);
-				//writer.append(',');
-				//writer.append("" + cfgDistance);
+				writer.append(',');
+				writer.append("" + cfgDistance);
+				writer.append(',');
+				writer.append("" + targetCFG.getTotalNodeCount());
 				writer.append('\n');
 			}
 			writer.flush();
