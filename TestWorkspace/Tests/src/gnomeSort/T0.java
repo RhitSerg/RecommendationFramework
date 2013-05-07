@@ -1,6 +1,6 @@
 package gnomeSort;
 
-public class T0a {
+public class T0 {
 	static void source(int[] theArray) {
 		int index = 1;
 		while (index < theArray.length) {

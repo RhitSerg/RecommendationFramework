@@ -1,6 +1,6 @@
 package selectionSort;
 
-public class T0a {
+public class T0 {
 	public void source(int[] x) {
 		for (int i = 0; i < x.length - 1; i++) {
 			int j = i + 1;

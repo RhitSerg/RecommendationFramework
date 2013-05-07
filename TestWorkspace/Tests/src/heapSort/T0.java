@@ -2,7 +2,7 @@ package heapSort;
 
 import java.util.PriorityQueue;
 
-public class T0a {
+public class T0 {
 	public static <E extends Comparable<? super E>> void source(E[] array) {
 
 		// Java's PriorityQueue class functions as a min heap

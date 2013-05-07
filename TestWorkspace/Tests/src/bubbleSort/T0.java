@@ -1,6 +1,6 @@
 package bubbleSort;
 
-public class T0a {
+public class T0 {
 	public void source(int[] num) {
 		boolean flag = true;
 		int temp;

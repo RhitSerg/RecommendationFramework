@@ -3,7 +3,7 @@ package bogoSort;
 import java.util.Collections;
 import java.util.List;
 
-public class T0a {
+public class T0 {
 
 	public void source(List<Integer> deck) {
 		boolean flag;

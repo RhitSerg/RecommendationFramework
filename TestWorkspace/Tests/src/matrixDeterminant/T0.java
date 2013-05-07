@@ -1,6 +1,6 @@
 package matrixDeterminant;
 
-public class T0a {
+public class T0 {
 
 	public static double source(int NMAX, double[][] x) {
 		double ret = 0;

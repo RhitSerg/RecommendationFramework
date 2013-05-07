@@ -3,7 +3,7 @@ package diceCoefficient;
 import java.util.HashSet;
 import java.util.Set;
 
-public class T0a {
+public class T0 {
 	public static double source(String s1, String s2) {
 		Set<String> nx = new HashSet<String>();
 		Set<String> ny = new HashSet<String>();

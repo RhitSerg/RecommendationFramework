@@ -1,6 +1,6 @@
 package radixSort;
 
-public class T0a {
+public class T0 {
 	public void source(int[] a) {
 		// our helper array
 		int[] t = new int[a.length];

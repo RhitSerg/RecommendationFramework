@@ -2,7 +2,7 @@ package diceCoefficientOptimized;
 
 import java.util.Arrays;
 
-public class T0a {
+public class T0 {
 	public static double source(String s, String t) {
 		// Verifying the input:
 		if (s == null || t == null)

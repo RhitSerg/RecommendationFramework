@@ -1,6 +1,6 @@
 package pidgeonholdSort;
 
-public class T0a {
+public class T0 {
 	public static void source(int[] a) {
 		// size of range of values in the list (ie, number of pigeonholes we
 		// need)

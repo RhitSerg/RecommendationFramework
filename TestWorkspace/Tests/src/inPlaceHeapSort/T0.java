@@ -1,6 +1,6 @@
 package inPlaceHeapSort;
 
-public class T0a {
+public class T0 {
 	public static void source(int[] array) {
 		/*
 		 * This method performs an in-place heapsort. Starting from the

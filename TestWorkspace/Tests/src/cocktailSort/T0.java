@@ -1,6 +1,6 @@
 package cocktailSort;
 
-public class T0a {
+public class T0 {
 	public static int[] source(int[] numbers) {
 		boolean swapped = true;
 		int i = 0;

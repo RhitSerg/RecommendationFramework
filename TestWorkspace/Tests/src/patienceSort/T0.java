@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
-public class T0a {
+public class T0 {
 
 	public static <E extends Comparable<? super E>> void source(E[] n) {
 		List<Stack<E>> piles = new ArrayList<Stack<E>>();

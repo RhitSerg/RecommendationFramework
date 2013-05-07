@@ -1,6 +1,6 @@
 package simpsonsRule;
 
-public class T0a {
+public class T0 {
 
 	public static double source(double a, double b) {
 		int N = 10000; // precision parameter

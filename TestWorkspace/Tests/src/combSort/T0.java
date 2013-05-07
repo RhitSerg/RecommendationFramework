@@ -1,6 +1,6 @@
 package combSort;
 
-public class T0a {
+public class T0 {
 	public static void source(int a[]) {
 		int gap = a.length;
 		boolean swapped;

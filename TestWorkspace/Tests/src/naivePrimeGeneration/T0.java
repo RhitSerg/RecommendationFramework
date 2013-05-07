@@ -3,7 +3,7 @@ package naivePrimeGeneration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class T0a {
+public class T0 {
 
 	public static List<Integer> source(int max) {
 		List<Integer> primes = new ArrayList<Integer>();

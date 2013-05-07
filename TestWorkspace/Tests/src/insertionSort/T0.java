@@ -1,6 +1,6 @@
 package insertionSort;
 
-public class T0a {
+public class T0 {
 	public static void source(int[] numbers) {
 		int i = 0;
 		while (i < numbers.length) {

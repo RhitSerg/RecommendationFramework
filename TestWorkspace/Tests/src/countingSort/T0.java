@@ -1,7 +1,7 @@
 package countingSort;
 import java.util.Arrays;
 
-public class T0a {
+public class T0 {
 	public static void source(int[] a, int low, int high) {
 		int[] counts = new int[high - low + 1]; // this will hold all possible
 												// values, from low to high
